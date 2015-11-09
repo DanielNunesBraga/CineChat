@@ -27,7 +27,7 @@ namespace CineChat.Controllers
             return View();
         }
 
-        public ActionResult Search()
+        public ActionResult MyList()
         {
             ViewBag.Message = "Your search page.";
 
