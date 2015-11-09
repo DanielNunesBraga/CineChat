@@ -26,5 +26,12 @@ namespace CineChat.Controllers
 
             return View();
         }
+
+        public ActionResult Search()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
     }
 }
