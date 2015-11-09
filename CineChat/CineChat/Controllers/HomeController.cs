@@ -26,5 +26,21 @@ namespace CineChat.Controllers
 
             return View();
         }
+
+        public ActionResult MyList()
+        {
+            ViewBag.Message = "Your search page.";
+
+            return View();
+        }
+        public ActionResult TopRated()
+        {
+            return View();
+        }
+
+        public ActionResult Chat()
+        {
+            return View();
+        }
     }
 }
