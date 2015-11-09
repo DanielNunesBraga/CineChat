@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using CineChat.Models;
+using CineChat.DAL;
 
 namespace CineChat
 {
@@ -55,8 +56,8 @@ namespace CineChat
             //   consumerSecret: "");
 
             //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            // appId: "",
+            // appSecret: "");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
