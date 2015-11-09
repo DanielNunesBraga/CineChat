@@ -25,12 +25,29 @@ namespace CineChat.Controllers
             return View(db.movie.ToList());
         }
 
+
+        //list of movies the user like
         [Authorize]
         public ActionResult MyMovies()
         {
             string currentUserId = User.Identity.GetUserId();
             var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
             return View(currentUser.likes.ToList());
+        }
+
+        //dislike movie of user
+        [Authorize]
+        public ActionResult Dislike(int? id)
+        {
+            if (id==null){
+                return RedirectToAction("MyMovies");
+            }
+            string currentUserId = User.Identity.GetUserId();
+            var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+            var movie = db.movie.FirstOrDefault(m => m.ID == id);
+            currentUser.likes.Remove(movie);
+            db.SaveChanges();
+            return RedirectToAction("MyMovies");
         }
 
         // GET: Movies/Details/5
