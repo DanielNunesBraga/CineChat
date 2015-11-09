@@ -67,6 +67,35 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
+                <table>
+                    <tr>
+                        @{
+                            int cnt = 0;
+                            List<CineChat.ViewModels.AssignedCategoryData> Categories = ViewBag.Categories;
+
+                            foreach (var Category in Categories)
+                            {
+                                if (cnt++ % 3 == 0)
+                                {
+                                    @:</tr><tr>
+                                }
+                                @:<td>
+                                <input type="checkbox"
+                                           name="selectedCategories"
+                                           value="@Category.CategoryID"
+                                           @(Html.Raw(Category.Assigned ? "checked=\"checked\"" : "")) />
+                                @Category.CategoryID @:&nbsp;@Category.Description
+                                @:</td>
+                            }
+                            @:</tr>
+                        }
+                    </table>
+                </div>
+            </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>

@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using CineChat.DAL;
 using CineChat.Models;
 using Microsoft.AspNet.Identity;
+using CineChat.ViewModels;
+using System.Data.Entity.Infrastructure;
 
 namespace CineChat.Controllers
 {
@@ -116,6 +118,9 @@ namespace CineChat.Controllers
             }
             //Movie movie = db.movie.Find(id);
             Movie movie = db.movie.Include(i => i.categories).Where(i => i.ID == id ).Single() ;
+
+            PopulateCategoryData(movie);
+
             if (movie == null)
             {
                 return HttpNotFound();
@@ -123,22 +128,96 @@ namespace CineChat.Controllers
             return View(movie);
         }
 
+
+        // movie edit get list of categories
+        private void PopulateCategoryData(Movie movie)
+        {
+            var allCategory = db.categorie;
+            var moviecategory = new HashSet<int>(movie.categories.Select(c => c.ID));
+            var viewModel = new List<AssignedCategoryData>();
+            foreach (var category in allCategory)
+            {
+                viewModel.Add(new AssignedCategoryData
+                {
+                    CategoryID = category.ID,
+                    Description = category.description,
+                    Assigned = moviecategory.Contains(category.ID)
+                });
+            }
+            ViewBag.Categories = viewModel;
+        }
+
+
+
         // POST: Movies/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,ImdbID,title,releasedate,duration,ratingImdb,description")] Movie movie)
+        public ActionResult Edit(int? id, string[] selectedCategories)
         {
-            if (ModelState.IsValid)
+            if (id == null)
             {
-                db.Entry(movie).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return View(movie);
+            var movieToUpdate = db.movie
+               .Include(i => i.categories).Where(i => i.ID == id).Single();
+
+            if (TryUpdateModel(movieToUpdate, "",
+            new string[] { "ImdbID", "title", "releasedate", "duration", "ratingImdb", "description" }))
+            {
+                try
+                {
+
+
+                    UpdateMovieCategory(selectedCategories, movieToUpdate);
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                catch (RetryLimitExceededException /* dex */)
+                {
+                    //Log the error (uncomment dex variable name and add a line here to write a log.
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
+            }
+            PopulateCategoryData(movieToUpdate);
+            return View(movieToUpdate);
         }
+
+        //---------------Edit POST Controller  modify categories--------------------------------
+        private void UpdateMovieCategory(string[] selectedCategories, Movie movieToUpdate)
+        {
+            if (selectedCategories == null)
+            {
+                movieToUpdate.categories = new List<Category>();
+                return;
+            }
+
+            var selectedCategoriesHS = new HashSet<string>(selectedCategories);
+            var moviecategory = new HashSet<int>
+                (movieToUpdate.categories.Select(c => c.ID));
+            foreach (var category in db.categorie)
+            {
+                if (selectedCategoriesHS.Contains(category.ID.ToString()))
+                {
+                    if (!moviecategory.Contains(category.ID))
+                    {
+                        movieToUpdate.categories.Add(category);
+                    }
+                }
+                else
+                {
+                    if (moviecategory.Contains(category.ID))
+                    {
+                        movieToUpdate.categories.Remove(category);
+                    }
+                }
+            }
+        }
+
 
         // GET: Movies/Delete/5
         [Authorize]
