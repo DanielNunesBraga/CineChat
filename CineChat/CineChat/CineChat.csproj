@@ -173,6 +173,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\ChatsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
@@ -187,6 +188,10 @@
     <Compile Include="Migrations\201511050044065_DBStart.cs" />
     <Compile Include="Migrations\201511050044065_DBStart.Designer.cs">
       <DependentUpon>201511050044065_DBStart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511102211446_chat_options_not_null.cs" />
+    <Compile Include="Migrations\201511102211446_chat_options_not_null.Designer.cs">
+      <DependentUpon>201511102211446_chat_options_not_null.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -278,6 +283,11 @@
     <Content Include="Views\Home\MyList.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
     <Content Include="Views\Home\TopRated.cshtml" />
+    <Content Include="Views\Chats\Create.cshtml" />
+    <Content Include="Views\Chats\Delete.cshtml" />
+    <Content Include="Views\Chats\Details.cshtml" />
+    <Content Include="Views\Chats\Edit.cshtml" />
+    <Content Include="Views\Chats\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -296,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511050044065_DBStart.resx">
       <DependentUpon>201511050044065_DBStart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511102211446_chat_options_not_null.resx">
+      <DependentUpon>201511102211446_chat_options_not_null.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
