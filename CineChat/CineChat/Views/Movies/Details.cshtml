@@ -65,11 +65,12 @@
         </tr>
         @foreach (var item in Model.categories)
         {
-        <tr>
-            <td>
+        @:<tr>
+            @:<td>
                 @Html.DisplayFor(modelItem => item.description)
-            </td>
-        </tr>}
+            @:</td>
+        @:</tr>
+        }
     </table>
 </div>
 <p>

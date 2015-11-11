@@ -36,11 +36,28 @@
         <dd>
             @Html.DisplayFor(model => model.category.description)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.posts)
+        </dt>
+        <dd></dd>
         @{ 
-            foreach(post in Model.posts)
+            foreach(var post in Model.posts)
             {
-
+                @:<dt>
+                    @Html.DisplayFor(model => post.user.UserName)
+                @:</dt>
+                @:<dd>
+                    @:<span>
+                        @Html.DisplayFor(model => post.message)
+                    @:</span>
+                    @:<span class="pull-right h6">
+                        @Html.DisplayFor(model => post.time)
+                    @:</span>
+                @:</dd>
             }
-        }}
+        }
     </dl>
 </div>
+<p>
+    @Html.ActionLink("Send a message!", "Create/" + Model.ID, "Posts")
+</p>
