@@ -33,6 +33,13 @@ namespace CineChat.Controllers
 
             return View();
         }
+
+        public ActionResult MovieDetails()
+        {
+            ViewBag.Message = "Your search page.";
+
+            return View();
+        }
         public ActionResult TopRated()
         {
             return View();

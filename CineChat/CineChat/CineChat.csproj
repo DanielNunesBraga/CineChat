@@ -288,6 +288,7 @@
     <Content Include="Views\Chats\Details.cshtml" />
     <Content Include="Views\Chats\Edit.cshtml" />
     <Content Include="Views\Chats\Index.cshtml" />
+    <Content Include="Views\Home\MovieDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
