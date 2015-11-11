@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<CineChat.Models.Chat>
-
+@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Index";
 }
@@ -35,7 +35,13 @@
             @Html.DisplayFor(modelItem => item.category.description)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @{
+                if (item.admin.Id == User.Identity.GetUserId())
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID })@:&nbsp;|&nbsp;
+    }
+
+            }
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID })
         </td>
