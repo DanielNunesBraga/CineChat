@@ -32,20 +32,21 @@ namespace CineChat.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            string currentUserId = User.Identity.GetUserId();
+            var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
             Chat chat = db.chat.Find(id);
+            //var chatuser = db.chatuser.FirstOrDefault(x => x.user.Id == currentUser.Id && x.chat.ID == chat.ID);
             if (chat == null)
             {
                 return HttpNotFound();
             }
             else if(!string.IsNullOrEmpty(chat.password))
-                {
-                
-                        ViewBag.pwderror = "Invalid password";
+            {
                         return RedirectToAction("chatpwd/" + chat.ID);
-                }
+            }
             return View(chat);
         }
-
+/*
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -67,7 +68,7 @@ namespace CineChat.Controllers
             }
 
             return View(chat);
-        }
+        }*/
 
 
         [Authorize]
@@ -76,6 +77,36 @@ namespace CineChat.Controllers
             ViewBag.chatID = id;
             return View();
         }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult chatpwd(int? id, string password)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Chat chat = db.chat.Find(id);
+            if (chat == null)
+            {
+                return HttpNotFound();
+            }
+            else if (string.IsNullOrEmpty(password) || password != chat.password)
+            {
+                ViewBag.pwderror = "Invalid password";
+                return RedirectToAction("chatpwd/" + chat.ID);
+            }
+            string currentUserId = User.Identity.GetUserId();
+            var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+            ChatUsers chatuser = new ChatUsers();
+            db.chatuser.Add(chatuser);
+            currentUser.logeduser.Add(chatuser);
+            chat.logeduser.Add(chatuser);
+            db.SaveChanges();
+            return RedirectToAction("Details/" + id);
+        }
+
 
         // GET: Chats/Create
         [Authorize]

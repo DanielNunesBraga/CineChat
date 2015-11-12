@@ -29,6 +29,7 @@ namespace CineChat.DAL
             public DbSet<Person> person { get; set; }
             public DbSet<Writer> writer { get; set; }
             public DbSet<Director> director { get; set; }
+            public DbSet<ChatUsers> chatuser { get; set; }
 
         public static ApplicationDbContext Create()
         {

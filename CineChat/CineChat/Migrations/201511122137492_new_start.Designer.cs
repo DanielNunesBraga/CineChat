@@ -7,13 +7,13 @@ namespace CineChat.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class chat_options_not_null : IMigrationMetadata
+    public sealed partial class new_start : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(chat_options_not_null));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(new_start));
         
         string IMigrationMetadata.Id
         {
-            get { return "201511102211446_chat_options_not_null"; }
+            get { return "201511122137492_new_start"; }
         }
         
         string IMigrationMetadata.Source
