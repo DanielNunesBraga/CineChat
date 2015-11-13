@@ -26,7 +26,7 @@
                     <!-- <li>@Html.ActionLink("Home", "Index", "Home")</li> 
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li> -->
-                    <li>@Html.ActionLink("Chat","Chat","Home")</li>
+                    <li>@Html.ActionLink("Chat","Index","Chats")</li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -57,7 +57,7 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer class="navbar navbar-inverse">
+        <footer class="navbar navbar-inverse navbar-fixed-bottom">
             <ul class="nav navbar-nav">
                 <li><p class="navbar-text" style="color:white"><span>&copy; @DateTime.Now.Year - CineChat</span></p></li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>

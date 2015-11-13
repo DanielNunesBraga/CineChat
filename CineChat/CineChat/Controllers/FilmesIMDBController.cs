@@ -14,29 +14,25 @@ namespace CineChat.Controllers
 {
     public class FilmesIMDBController : ApiController
     {
-
-        static void FilmesIMDB()
+        public void GetData()
         {
-            RunAsync().Wait();
-        }
 
-        static async Task RunAsync()
-        {
-            using (var client = new HttpClient())
+            HttpClient myClient = new HttpClient();
+            // New code:
+            myClient.BaseAddress = new Uri("http://www.imdb.com/movies-in-theaters/");
+            myClient.DefaultRequestHeaders.Accept.Clear();
+            myClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            
+            //alterei o codigo de maneira a responder da mesma maneira como se estivesse a trabalhar como async
+            HttpResponseMessage response = myClient.GetAsync("api/products/1").Result;
+
+            if (response.IsSuccessStatusCode)
             {
-                // New code:
-                client.BaseAddress = new Uri("http://www.imdb.com/movies-in-theaters/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await client.GetAsync("api/products/1");
-                if (response.IsSuccessStatusCode)
-                {
-                    FilmesIMDB filmes = await response.Content.ReadAsAsync<FilmesIMDB>();
-                    Console.WriteLine("{0}\t${1}\t{2}", filmes.Name, filmes.Actors, filmes.Category);
-                }
-
-
+                //link: http://stackoverflow.com/questions/19448690/how-to-consume-a-webapi-from-asp-net-web-api-to-store-result-in-database
+                var filmes = response.Content.ReadAsAsync<IEnumerable<FilmesIMDB>>().Result;
+               
+               
+             
             }
 
         }

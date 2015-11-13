@@ -1,0 +1,46 @@
+﻿@model CineChat.Models.Chat
+@using Microsoft.AspNet.Identity;
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Chat</h4>
+    <p>
+        @{
+            if (Model.admin.Id == User.Identity.GetUserId())
+            {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID })@:&nbsp;|&nbsp;
+    }
+
+    }
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category.description)
+        </dd>
+        @{ 
+            foreach(post in Model.posts)
+            {
+
+            }
+        }}
+    </dl>
+</div>
