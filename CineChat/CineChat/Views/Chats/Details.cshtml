@@ -17,6 +17,8 @@
 
     }
     @Html.ActionLink("Back to List", "Index")
+    &nbsp;|&nbsp;
+    @Html.ActionLink("Exit Channel", "ChatLogout/" + Model.ID)
 </p>
 
     <hr />
@@ -37,27 +39,53 @@
             @Html.DisplayFor(model => model.category.description)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.posts)
+            @Html.DisplayNameFor(model => model.posts) :
         </dt>
-        <dd></dd>
+        <dd><hr /></dd>
         @{ 
             foreach(var post in Model.posts)
             {
                 @:<dt>
-                    @Html.DisplayFor(model => post.user.UserName)
+                    @Html.DisplayFor(model => post.user.UserName)@: said:
                 @:</dt>
                 @:<dd>
-                    @:<span>
+                    @:<span  style="white-space: pre-line">
                         @Html.DisplayFor(model => post.message)
-                    @:</span>
-                    @:<span class="pull-right h6">
+                    @:</span><br />
+                    @:<span class="pull-right bottom-right h6">
                         @Html.DisplayFor(model => post.time)
                     @:</span>
+                    @:<hr />
                 @:</dd>
             }
         }
     </dl>
 </div>
+
+@using (Html.BeginForm("Post","Chats", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.Hidden("id", Model.ID)
+
+        <div class="form-group">
+            @Html.Label("message","Message" ,htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="col-md-5">
+                    @Html.TextArea("message", "", new { @class = "form-control" })
+                </div>
+                <div  class="col-md-5">
+                    <input type="submit" value="Send" class="btn btn-default btn-lg" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
 <p>
     @Html.ActionLink("Send a message!", "Create/" + Model.ID, "Posts")
 </p>

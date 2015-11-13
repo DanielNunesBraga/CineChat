@@ -35,47 +35,51 @@ namespace CineChat.Controllers
             string currentUserId = User.Identity.GetUserId();
             var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
             Chat chat = db.chat.Find(id);
-            //var chatuser = db.chatuser.FirstOrDefault(x => x.user.Id == currentUser.Id && x.chat.ID == chat.ID);
             if (chat == null)
             {
                 return HttpNotFound();
             }
-            else if(!string.IsNullOrEmpty(chat.password))
+            if(string.IsNullOrEmpty(chat.password))
             {
-                        return RedirectToAction("chatpwd/" + chat.ID);
+                ChatUsers chatuser = new ChatUsers();
+                db.chatuser.Add(chatuser);
+                currentUser.logeduser.Add(chatuser);
+                chat.logeduser.Add(chatuser);
+                db.SaveChanges();
+            }
+            if (db.chatuser.FirstOrDefault(ch => ch.user.Id == currentUser.Id && ch.chat.ID == id) == null)
+            {
+                return RedirectToAction("chatpwd/" + chat.ID);
             }
             return View(chat);
         }
-/*
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Details(int? id, string password)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Chat chat = db.chat.Find(id);
-            if (chat == null)
-            {
-                return HttpNotFound();
-            }
-            else if (string.IsNullOrEmpty(password) || password!=chat.password)
-            {
-                ViewBag.pwderror = "Invalid password";
-                return RedirectToAction("chatpwd/" + chat.ID);
-            }
-
-            return View(chat);
-        }*/
-
 
         [Authorize]
         public ActionResult chatpwd(int? id)
         {
             ViewBag.chatID = id;
+            var chat = db.chat.FirstOrDefault(x => x.ID == id);
+            if (chat != null)
+            {
+                ViewBag.chatTitle = chat.title;
+            }
             return View();
+        }
+
+        [Authorize]
+        public ActionResult ChatLogout(int? id)
+        {
+            if(id != null)
+            {
+                string CurrentUserId = User.Identity.GetUserId();
+                var CurrentLogedUser = db.chatuser.FirstOrDefault(cu => cu.chat.ID == id && cu.user.Id == CurrentUserId);
+                if (CurrentLogedUser != null)
+                {
+                    db.chatuser.Remove(CurrentLogedUser);
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("Index");
         }
 
         [Authorize]
@@ -106,6 +110,7 @@ namespace CineChat.Controllers
             db.SaveChanges();
             return RedirectToAction("Details/" + id);
         }
+
 
 
         // GET: Chats/Create
@@ -222,6 +227,28 @@ namespace CineChat.Controllers
                                    orderby d.description
                                    select d;
             ViewBag.category = new SelectList(categoriesQuery, "ID", "description", selectedCategory);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Post(int? id, string message)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index", "Chats");
+            }
+            Post post = new Models.Post(); ;
+            string currentUserId = User.Identity.GetUserId();
+            var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+            var currentchat = db.chat.FirstOrDefault(y => y.ID == id);
+            post.message = message;            
+            post.time = DateTime.Now;
+            db.post.Add(post);
+            currentUser.posts.Add(post);
+            currentchat.posts.Add(post);
+            db.SaveChanges();
+            return RedirectToAction("Details/" + id, "Chats");
         }
 
         protected override void Dispose(bool disposing)

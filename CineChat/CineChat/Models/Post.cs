@@ -16,7 +16,5 @@ namespace CineChat.Models
         public virtual ApplicationUser user { get; set; }
 
         public virtual Chat chat { get; set; }
-
-
     }
 }

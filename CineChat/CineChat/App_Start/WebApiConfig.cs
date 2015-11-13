@@ -9,7 +9,7 @@ namespace CineChat
     {
         public static void Register(HttpConfiguration config)
         {
-            config.MapHttpAttributeRoutes();
+            //config.MapHttpAttributeRoutes(); esta a dar erro, comentario a remover depois
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
