@@ -32,13 +32,81 @@ namespace CineChat.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            string currentUserId = User.Identity.GetUserId();
+            var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+            Chat chat = db.chat.Find(id);
+            //var chatuser = db.chatuser.FirstOrDefault(x => x.user.Id == currentUser.Id && x.chat.ID == chat.ID);
+            if (chat == null)
+            {
+                return HttpNotFound();
+            }
+            else if(!string.IsNullOrEmpty(chat.password))
+            {
+                        return RedirectToAction("chatpwd/" + chat.ID);
+            }
+            return View(chat);
+        }
+/*
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Details(int? id, string password)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             Chat chat = db.chat.Find(id);
             if (chat == null)
             {
                 return HttpNotFound();
             }
+            else if (string.IsNullOrEmpty(password) || password!=chat.password)
+            {
+                ViewBag.pwderror = "Invalid password";
+                return RedirectToAction("chatpwd/" + chat.ID);
+            }
+
             return View(chat);
+        }*/
+
+
+        [Authorize]
+        public ActionResult chatpwd(int? id)
+        {
+            ViewBag.chatID = id;
+            return View();
         }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult chatpwd(int? id, string password)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Chat chat = db.chat.Find(id);
+            if (chat == null)
+            {
+                return HttpNotFound();
+            }
+            else if (string.IsNullOrEmpty(password) || password != chat.password)
+            {
+                ViewBag.pwderror = "Invalid password";
+                return RedirectToAction("chatpwd/" + chat.ID);
+            }
+            string currentUserId = User.Identity.GetUserId();
+            var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+            ChatUsers chatuser = new ChatUsers();
+            db.chatuser.Add(chatuser);
+            currentUser.logeduser.Add(chatuser);
+            chat.logeduser.Add(chatuser);
+            db.SaveChanges();
+            return RedirectToAction("Details/" + id);
+        }
+
 
         // GET: Chats/Create
         [Authorize]
@@ -54,18 +122,27 @@ namespace CineChat.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,title,password")] Chat chat, int category)
+        public ActionResult Create([Bind(Include = "ID,title,password")] Chat chat, int? category)
         {
             try {
-                if (ModelState.IsValid)
+                if (category != null)
                 {
-                    chat.category = db.categorie.FirstOrDefault(ct => ct.ID == category);
-                    db.chat.Add(chat);
-                    string currentUserId = User.Identity.GetUserId();
-                    var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
-                    currentUser.chat.Add(chat);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (ModelState.IsValid)
+                    {
+                        var currentCategory = db.categorie.FirstOrDefault(ct => ct.ID == category);
+                        if(currentCategory == null)
+                        {
+                            PopulateCategoryDropDownList();
+                            return View(chat);
+                        }
+                        chat.category = currentCategory;
+                        db.chat.Add(chat);
+                        string currentUserId = User.Identity.GetUserId();
+                        var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+                        currentUser.chat.Add(chat);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
                 }
             }
             catch (RetryLimitExceededException /* dex */)

@@ -31,6 +31,8 @@ namespace CineChat.Models
         public virtual ICollection<Post> posts { get; set; }
 
         public virtual ICollection<Chat> chat { get; set; }
+
+        public virtual ICollection<ChatUsers> logeduser { get; set; }
     }
 
 

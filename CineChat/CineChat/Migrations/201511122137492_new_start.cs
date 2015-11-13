@@ -3,7 +3,7 @@ namespace CineChat.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class DBStart : DbMigration
+    public partial class new_start : DbMigration
     {
         public override void Up()
         {
@@ -21,7 +21,7 @@ namespace CineChat.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        title = c.String(),
+                        title = c.String(nullable: false, maxLength: 50),
                         password = c.String(),
                         admin_Id = c.String(maxLength: 128),
                         category_ID = c.Int(),
@@ -34,6 +34,39 @@ namespace CineChat.Migrations
                 .Index(t => t.admin_Id)
                 .Index(t => t.category_ID)
                 .Index(t => t.movie_ID);
+            
+            CreateTable(
+                "dbo.AspNetUsers",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Email = c.String(maxLength: 256),
+                        EmailConfirmed = c.Boolean(nullable: false),
+                        PasswordHash = c.String(),
+                        SecurityStamp = c.String(),
+                        PhoneNumber = c.String(),
+                        PhoneNumberConfirmed = c.Boolean(nullable: false),
+                        TwoFactorEnabled = c.Boolean(nullable: false),
+                        LockoutEndDateUtc = c.DateTime(),
+                        LockoutEnabled = c.Boolean(nullable: false),
+                        AccessFailedCount = c.Int(nullable: false),
+                        UserName = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.UserName, unique: true, name: "UserNameIndex");
+            
+            CreateTable(
+                "dbo.AspNetUserClaims",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        ClaimType = c.String(),
+                        ClaimValue = c.String(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId);
             
             CreateTable(
                 "dbo.Movies",
@@ -111,6 +144,32 @@ namespace CineChat.Migrations
                 .Index(t => t.person_ID);
             
             CreateTable(
+                "dbo.ChatUsers",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        chat_ID = c.Int(),
+                        user_Id = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Chats", t => t.chat_ID)
+                .ForeignKey("dbo.AspNetUsers", t => t.user_Id)
+                .Index(t => t.chat_ID)
+                .Index(t => t.user_Id);
+            
+            CreateTable(
+                "dbo.AspNetUserLogins",
+                c => new
+                    {
+                        LoginProvider = c.String(nullable: false, maxLength: 128),
+                        ProviderKey = c.String(nullable: false, maxLength: 128),
+                        UserId = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId);
+            
+            CreateTable(
                 "dbo.Posts",
                 c => new
                     {
@@ -125,6 +184,29 @@ namespace CineChat.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.user_Id)
                 .Index(t => t.chat_ID)
                 .Index(t => t.user_Id);
+            
+            CreateTable(
+                "dbo.AspNetUserRoles",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        RoleId = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
+            
+            CreateTable(
+                "dbo.AspNetRoles",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
             CreateTable(
                 "dbo.MovieCategories",
@@ -182,10 +264,15 @@ namespace CineChat.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Chats", "movie_ID", "dbo.Movies");
             DropForeignKey("dbo.Chats", "category_ID", "dbo.Categories");
+            DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Posts", "user_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.Posts", "chat_ID", "dbo.Chats");
+            DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.ChatUsers", "user_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.ChatUsers", "chat_ID", "dbo.Chats");
             DropForeignKey("dbo.Writers", "person_ID", "dbo.People");
             DropForeignKey("dbo.WriterMovies", "Movie_ID", "dbo.Movies");
             DropForeignKey("dbo.WriterMovies", "Writer_ID", "dbo.Writers");
@@ -200,6 +287,7 @@ namespace CineChat.Migrations
             DropForeignKey("dbo.Characters", "actor_ID", "dbo.People");
             DropForeignKey("dbo.MovieCategories", "Category_ID", "dbo.Categories");
             DropForeignKey("dbo.MovieCategories", "Movie_ID", "dbo.Movies");
+            DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Chats", "admin_Id", "dbo.AspNetUsers");
             DropIndex("dbo.WriterMovies", new[] { "Movie_ID" });
             DropIndex("dbo.WriterMovies", new[] { "Writer_ID" });
@@ -209,14 +297,22 @@ namespace CineChat.Migrations
             DropIndex("dbo.DirectorMovies", new[] { "Director_ID" });
             DropIndex("dbo.MovieCategories", new[] { "Category_ID" });
             DropIndex("dbo.MovieCategories", new[] { "Movie_ID" });
+            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.Posts", new[] { "user_Id" });
             DropIndex("dbo.Posts", new[] { "chat_ID" });
+            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
+            DropIndex("dbo.ChatUsers", new[] { "user_Id" });
+            DropIndex("dbo.ChatUsers", new[] { "chat_ID" });
             DropIndex("dbo.Writers", new[] { "person_ID" });
             DropIndex("dbo.Rates", new[] { "user_Id" });
             DropIndex("dbo.Rates", new[] { "movie_ID" });
             DropIndex("dbo.Directors", new[] { "person_ID" });
             DropIndex("dbo.Characters", new[] { "movie_ID" });
             DropIndex("dbo.Characters", new[] { "actor_ID" });
+            DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
+            DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Chats", new[] { "movie_ID" });
             DropIndex("dbo.Chats", new[] { "category_ID" });
             DropIndex("dbo.Chats", new[] { "admin_Id" });
@@ -224,13 +320,19 @@ namespace CineChat.Migrations
             DropTable("dbo.MovieApplicationUsers");
             DropTable("dbo.DirectorMovies");
             DropTable("dbo.MovieCategories");
+            DropTable("dbo.AspNetRoles");
+            DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.Posts");
+            DropTable("dbo.AspNetUserLogins");
+            DropTable("dbo.ChatUsers");
             DropTable("dbo.Writers");
             DropTable("dbo.Rates");
             DropTable("dbo.Directors");
             DropTable("dbo.People");
             DropTable("dbo.Characters");
             DropTable("dbo.Movies");
+            DropTable("dbo.AspNetUserClaims");
+            DropTable("dbo.AspNetUsers");
             DropTable("dbo.Chats");
             DropTable("dbo.Categories");
         }
