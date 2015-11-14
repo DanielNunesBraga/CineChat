@@ -7,7 +7,9 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New Channel", "Create")
+    &nbsp;|&nbsp;
+    @Html.ActionLink("Channels i'm logged on", "ListLoged")
 </p>
 <table class="table">
     <tr>
@@ -39,11 +41,18 @@
                 if (item.admin.Id == User.Identity.GetUserId())
                 {
                     @Html.ActionLink("Edit", "Edit", new { id = item.ID })@:&nbsp;|&nbsp;
-    }
+                }
 
             }
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Enter Channel", "Details", new { id=item.ID })
+            @{
+                if (item.admin.Id == User.Identity.GetUserId())
+                {
+                    @:&nbsp;|&nbsp;
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                }
+
+            }
         </td>
     </tr>
 }
