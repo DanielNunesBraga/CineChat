@@ -116,14 +116,24 @@ namespace CineChat.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ImdbID,title,releasedate,duration,ratingImdb,description")] Movie movie, string[] selectedCategories)
+        public ActionResult Create([Bind(Include = "ID,ImdbID,title,releasedate,duration,ratingImdb,description,poster")] Movie movie, string[] selectedCategories)
         {
-            if (ModelState.IsValid)
+            
+            if (ModelState.IsValid && selectedCategories != null)
             {
                 //get current user
                 string currentUserId = User.Identity.GetUserId();
                 var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
 
+                List<Category> categories = new List<Category>();
+                int catid = 0;
+
+                foreach (string categ in selectedCategories)
+                {
+                    catid = Convert.ToInt32(categ);
+                    categories.Add(db.categorie.FirstOrDefault(cat => cat.ID == catid));
+                }
+                movie.categories = categories;
                 //add movie to db
                 db.movie.Add(movie);
 
@@ -134,6 +144,19 @@ namespace CineChat.Controllers
                 return RedirectToAction("Index");
             }
 
+
+            var allCategory = db.categorie;
+            var viewModel = new List<AssignedCategoryData>();
+            foreach (var category in allCategory)
+            {
+                viewModel.Add(new AssignedCategoryData
+                {
+                    CategoryID = category.ID,
+                    Description = category.description,
+                    Assigned = false
+                });
+            }
+            ViewBag.Categories = viewModel;
             return View(movie);
         }
 
