@@ -4,75 +4,98 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="well">
+    <h1 class="text-left">Details Movie</h1>
+    <hr>
+    <div class="panel panel-default ">
+        <div class="panel-body ">
+            <div class="col-sm-3">
 
-<div>
-    <h4>Movie</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ImdbID)
-        </dt>
+                <img src="/Content/Images/TheAmazingSpiderMan.jpg" class="img-thumbnail  pull-left img-responsive ">
+            </div>
+            <div class="col-sm-9">
+                <table class="">
+                    <thead>
+                        <tr>
+                            <th class="top-left">Title:</th>
+                            <th> @Html.DisplayFor(modelItem => modelItem.title) </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>IMDB ID:</td>
+                            <td>@Html.DisplayFor(model => model.ImdbID) </td>
+                        </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.ImdbID)
-        </dd>
+                        <tr>
+                            <td>Realesed:</td>
+                            <td>@Html.DisplayFor(modelItem => modelItem.releasedate)</td>
+                        </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.title)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.title)
-        </dd>
+                        <tr>
+                            <td>Duration:</td>
+                            <td>@Html.DisplayFor(modelItem => modelItem.duration)</td>
+                        </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.releasedate)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.releasedate)
-        </dd>
+                        <tr>
+                            <td>Ratting Imdb:</td>
+                            <td>@Html.DisplayFor(modelItem => modelItem.ratingImdb)</td>
+                        </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.duration)
-        </dt>
+                        <tr>
+                            <td>Categories:</td>
+                            <td>@foreach (var item in Model.categories)
+                                {
+                                    @Html.DisplayFor(model => item.description)
+                                }
+                            </td>
 
-        <dd>
-            @Html.DisplayFor(model => model.duration)
-        </dd>
+                        </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ratingImdb)
-        </dt>
+                        <tr>
+                            <td class="top-left">Description: </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.description)
+                            </td>
+                        </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.ratingImdb)
-        </dd>
+                       
 
-        <dt>
-            @Html.DisplayNameFor(model => model.description)
-        </dt>
+                    </tbody>
 
-        <dd>
-            @Html.DisplayFor(model => model.description)
-        </dd>
 
-    </dl>
-    <table>
-        <tr>
-            <th>Categories:</th>
-        </tr>
-        @foreach (var item in Model.categories)
-        {
-        @:<tr>
-            @:<td>
-                @Html.DisplayFor(modelItem => item.description)
-            @:</td>
-        @:</tr>
-        }
-    </table>
+                </table>
+                <tr>
+                    <td colspan="2">
+                        <br />
+                        <span class="h5 pull-right">
+
+                            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+                            @Html.ActionLink("Details", "Details", new { id = Model.ID }) 
+
+                            <span class="glyphicon glyphicon-search h5" aria-hidden="true">
+                            </span> |
+
+                            @Html.ActionLink("Delete", "Delete", new { id = Model.ID }) |
+                            @Html.ActionLink("Dislike", "Dislike", new { id = Model.ID })
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+
+                        </span>
+                    </td>
+
+
+                </tr>
+            </div>
+        </div>
+    </div>
+
+
 </div>
+
+
+    </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")

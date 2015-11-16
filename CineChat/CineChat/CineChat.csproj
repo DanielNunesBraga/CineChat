@@ -295,6 +295,7 @@
     <Content Include="Views\Home\MovieDetails.cshtml" />
     <Content Include="Views\Chats\chatpwd.cshtml" />
     <Content Include="Views\Chats\ListLoged.cshtml" />
+    <Content Include="Views\Movies\Details - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
