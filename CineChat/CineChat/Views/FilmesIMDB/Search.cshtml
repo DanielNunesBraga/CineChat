@@ -12,10 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
+            @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Year)
@@ -74,10 +71,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category)
+            @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Year)
@@ -109,8 +103,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Awards)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Poster)
+        <td><img src="@Html.DisplayFor(modelItem => item.Poster)"/>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Metascore)

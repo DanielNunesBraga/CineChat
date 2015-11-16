@@ -32,6 +32,8 @@ namespace CineChat.Models
         [StringLength(1000, MinimumLength = 1)]
         public string description { get; set; }
 
+        public string poster { get; set; }
+
         public virtual ICollection<Category> categories{ get; set; }
 
         public virtual ICollection<Characters> characters { get; set; }

@@ -19,6 +19,8 @@ namespace CineChat.Controllers
             return View();
         }
 
+        [System.Web.Http.Authorize]
+        [System.Web.Http.HttpPost]
         public ActionResult Search(string id)
         {
             IEnumerable<FilmesIMDB> filmes = new List<FilmesIMDB>();
