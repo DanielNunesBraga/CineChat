@@ -300,6 +300,8 @@
     <Content Include="Views\Posts\Index.cshtml" />
     <Content Include="Views\Home\MovieDetails.cshtml" />
     <Content Include="Views\Chats\chatpwd.cshtml" />
+    <Content Include="Views\FilmesIMDB\Index.cshtml" />
+    <Content Include="Views\FilmesIMDB\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

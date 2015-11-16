@@ -12,11 +12,47 @@ using System.Web;
 
 namespace CineChat.Controllers
 {
-    public class FilmesIMDBController : ApiController
+    public class FilmesIMDBController : Controller
     {
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Search(string id)
+        {
+            IEnumerable<FilmesIMDB> filmes = new List<FilmesIMDB>();
+            string searchString = id;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                filmes = apiSearch(searchString);
+            }
+            return View(filmes);
+        }
+
+        private IEnumerable<FilmesIMDB> apiSearch(string searchString)
+        {
+            HttpClient myClient = new HttpClient();
+            // New code:
+            myClient.BaseAddress = new Uri("http://www.omdbapi.com/");
+            myClient.DefaultRequestHeaders.Accept.Clear();
+            myClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            //alterei o codigo de maneira a responder da mesma maneira como se estivesse a trabalhar como async
+            HttpResponseMessage response = myClient.GetAsync("?t=" + searchString + "&y=&plot=short&r=json").Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                //link: http://stackoverflow.com/questions/19448690/how-to-consume-a-webapi-from-asp-net-web-api-to-store-result-in-database
+                var filmes = response.Content.ReadAsAsync<IEnumerable<FilmesIMDB>>().Result;
+                return filmes;
+            }
+            return new List<FilmesIMDB>();
+        }
+        /*
+         * Código antigo e diferente
         public void GetData()
         {
-
             HttpClient myClient = new HttpClient();
             // New code:
             myClient.BaseAddress = new Uri("http://www.imdb.com/movies-in-theaters/");
@@ -30,11 +66,8 @@ namespace CineChat.Controllers
             {
                 //link: http://stackoverflow.com/questions/19448690/how-to-consume-a-webapi-from-asp-net-web-api-to-store-result-in-database
                 var filmes = response.Content.ReadAsAsync<IEnumerable<FilmesIMDB>>().Result;
-               
-               
-             
             }
-
         }
+          */
     }
 }
