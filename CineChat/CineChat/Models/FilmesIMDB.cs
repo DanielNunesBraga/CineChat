@@ -24,7 +24,7 @@ namespace CineChat.Models
         public int Metascore { get; set; }
         public float RatingIMDB { get; set; }
         public string ImdbID { get; set; }
-        public int IMDBVotes { get; set; }
+        public string IMDBVotes { get; set; }
         public string Type { get; set; }
         public bool Response { get; set; }
 

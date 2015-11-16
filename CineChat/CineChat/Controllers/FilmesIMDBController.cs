@@ -44,8 +44,10 @@ namespace CineChat.Controllers
             if (response.IsSuccessStatusCode)
             {
                 //link: http://stackoverflow.com/questions/19448690/how-to-consume-a-webapi-from-asp-net-web-api-to-store-result-in-database
-                var filmes = response.Content.ReadAsAsync<IEnumerable<FilmesIMDB>>().Result;
-                return filmes;
+                var filmes = response.Content.ReadAsAsync<FilmesIMDB>().Result;
+                List<FilmesIMDB> result = new List<FilmesIMDB>();
+                result.Add(filmes);
+                return result;
             }
             return new List<FilmesIMDB>();
         }
