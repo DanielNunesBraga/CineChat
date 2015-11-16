@@ -1,0 +1,30 @@
+﻿@model IEnumerable<CineChat.Models.ChatUsers>
+
+@{
+    ViewBag.Title = "ListLoged";
+}
+
+<h2>ListLoged</h2>
+
+<table class="table">
+    <tr>
+        <th>Channel Name</th>
+        <th>Category</th>
+        <th>Exit</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @item.chat.title
+        </td>
+        <td>
+            @item.chat.category.description
+        </td>
+        <td>
+            @Html.ActionLink("Channel Logout", "ChatLogout", new { id = item.chat.ID })
+        </td>
+    </tr>
+}
+
+</table>

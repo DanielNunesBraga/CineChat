@@ -187,7 +187,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
-    <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -293,15 +292,9 @@
     <Content Include="Views\Chats\Details.cshtml" />
     <Content Include="Views\Chats\Edit.cshtml" />
     <Content Include="Views\Chats\Index.cshtml" />
-    <Content Include="Views\Posts\Create.cshtml" />
-    <Content Include="Views\Posts\Delete.cshtml" />
-    <Content Include="Views\Posts\Details.cshtml" />
-    <Content Include="Views\Posts\Edit.cshtml" />
-    <Content Include="Views\Posts\Index.cshtml" />
     <Content Include="Views\Home\MovieDetails.cshtml" />
     <Content Include="Views\Chats\chatpwd.cshtml" />
-    <Content Include="Views\FilmesIMDB\Index.cshtml" />
-    <Content Include="Views\FilmesIMDB\Search.cshtml" />
+    <Content Include="Views\Chats\ListLoged.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

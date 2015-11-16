@@ -24,6 +24,15 @@ namespace CineChat.Controllers
             return View(db.chat.ToList());
         }
 
+        //get channels i am loged in and possibility to exit that channel
+        [Authorize]
+        public ActionResult ListLoged()
+        {
+            string CurrentUserID = User.Identity.GetUserId();
+            return View(db.chatuser.ToList().Where(x => x.user.Id == CurrentUserID));
+        }
+
+
         // GET: Chats/Details/5
         [Authorize]
         public ActionResult Details(int? id)
@@ -39,17 +48,21 @@ namespace CineChat.Controllers
             {
                 return HttpNotFound();
             }
-            if(string.IsNullOrEmpty(chat.password))
-            {
-                ChatUsers chatuser = new ChatUsers();
-                db.chatuser.Add(chatuser);
-                currentUser.logeduser.Add(chatuser);
-                chat.logeduser.Add(chatuser);
-                db.SaveChanges();
-            }
+
             if (db.chatuser.FirstOrDefault(ch => ch.user.Id == currentUser.Id && ch.chat.ID == id) == null)
             {
-                return RedirectToAction("chatpwd/" + chat.ID);
+                if (string.IsNullOrEmpty(chat.password))
+                {
+                    ChatUsers chatuser = new ChatUsers();
+                    db.chatuser.Add(chatuser);
+                    currentUser.logeduser.Add(chatuser);
+                    chat.logeduser.Add(chatuser);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return RedirectToAction("chatpwd/" + chat.ID);
+                }
             }
             return View(chat);
         }
@@ -250,6 +263,25 @@ namespace CineChat.Controllers
             db.SaveChanges();
             return RedirectToAction("Details/" + id, "Chats");
         }
+
+        [Authorize]
+        public ActionResult PostDelete(int? id)
+        {
+            if (id != null)
+            {
+                Post post = db.post.Find(id);
+                int chatid = post.chat.ID;
+                string currentUserId = User.Identity.GetUserId();
+                if (post.user.Id == currentUserId || post.chat.admin.Id == currentUserId)
+                {
+                    db.post.Remove(post);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Details/" + chatid, "Chats");
+            }
+            return RedirectToAction("Index", "Chats");
+        }
+
 
         protected override void Dispose(bool disposing)
         {
