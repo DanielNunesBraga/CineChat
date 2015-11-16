@@ -36,5 +36,6 @@ namespace CineChat.DAL
             return new ApplicationDbContext();
         }
 
+        public System.Data.Entity.DbSet<CineChat.Models.FilmesIMDB> FilmesIMDBs { get; set; }
     }
 }
