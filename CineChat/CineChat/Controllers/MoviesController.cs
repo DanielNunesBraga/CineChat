@@ -147,13 +147,19 @@ namespace CineChat.Controllers
 
             var allCategory = db.categorie;
             var viewModel = new List<AssignedCategoryData>();
+            bool cat_selected = false;
             foreach (var category in allCategory)
             {
+                cat_selected = false;
+                if(selectedCategories.Contains(category.ID.ToString()))
+                {
+                    cat_selected = true;
+                }
                 viewModel.Add(new AssignedCategoryData
                 {
                     CategoryID = category.ID,
                     Description = category.description,
-                    Assigned = false
+                    Assigned = cat_selected
                 });
             }
             ViewBag.Categories = viewModel;
