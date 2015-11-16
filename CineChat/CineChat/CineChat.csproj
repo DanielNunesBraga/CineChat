@@ -195,6 +195,10 @@
     <Compile Include="Migrations\201511122137492_new_start.Designer.cs">
       <DependentUpon>201511122137492_new_start.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511162115452_start2.cs" />
+    <Compile Include="Migrations\201511162115452_start2.Designer.cs">
+      <DependentUpon>201511162115452_start2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -311,6 +315,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201511122137492_new_start.resx">
       <DependentUpon>201511122137492_new_start.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511162115452_start2.resx">
+      <DependentUpon>201511162115452_start2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

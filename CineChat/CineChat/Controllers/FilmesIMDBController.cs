@@ -21,6 +21,7 @@ namespace CineChat.Controllers
 
         public ActionResult Search(string id)
         {
+            
             IEnumerable<FilmesIMDB> filmes = new List<FilmesIMDB>();
             string searchString = id;
             if (!String.IsNullOrEmpty(searchString))
@@ -51,25 +52,6 @@ namespace CineChat.Controllers
             }
             return new List<FilmesIMDB>();
         }
-        /*
-         * Código antigo e diferente
-        public void GetData()
-        {
-            HttpClient myClient = new HttpClient();
-            // New code:
-            myClient.BaseAddress = new Uri("http://www.imdb.com/movies-in-theaters/");
-            myClient.DefaultRequestHeaders.Accept.Clear();
-            myClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            
-            //alterei o codigo de maneira a responder da mesma maneira como se estivesse a trabalhar como async
-            HttpResponseMessage response = myClient.GetAsync("api/products/1").Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                //link: http://stackoverflow.com/questions/19448690/how-to-consume-a-webapi-from-asp-net-web-api-to-store-result-in-database
-                var filmes = response.Content.ReadAsAsync<IEnumerable<FilmesIMDB>>().Result;
-            }
-        }
-          */
+       
     }
 }
