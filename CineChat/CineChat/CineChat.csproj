@@ -195,9 +195,13 @@
     <Compile Include="Migrations\201511122137492_new_start.Designer.cs">
       <DependentUpon>201511122137492_new_start.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201511162115452_start2.cs" />
-    <Compile Include="Migrations\201511162115452_start2.Designer.cs">
-      <DependentUpon>201511162115452_start2.cs</DependentUpon>
+    <Compile Include="Migrations\201511162132191_renew_models_verify.cs" />
+    <Compile Include="Migrations\201511162132191_renew_models_verify.Designer.cs">
+      <DependentUpon>201511162132191_renew_models_verify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511162151580_movie_poster.cs" />
+    <Compile Include="Migrations\201511162151580_movie_poster.Designer.cs">
+      <DependentUpon>201511162151580_movie_poster.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -299,6 +303,7 @@
     <Content Include="Views\Home\MovieDetails.cshtml" />
     <Content Include="Views\Chats\chatpwd.cshtml" />
     <Content Include="Views\Chats\ListLoged.cshtml" />
+    <Content Include="Views\Movies\Details - Copy.cshtml" />
     <Content Include="Views\FilmesIMDB\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -316,8 +321,11 @@
     <EmbeddedResource Include="Migrations\201511122137492_new_start.resx">
       <DependentUpon>201511122137492_new_start.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511162115452_start2.resx">
-      <DependentUpon>201511162115452_start2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511162132191_renew_models_verify.resx">
+      <DependentUpon>201511162132191_renew_models_verify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511162151580_movie_poster.resx">
+      <DependentUpon>201511162151580_movie_poster.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

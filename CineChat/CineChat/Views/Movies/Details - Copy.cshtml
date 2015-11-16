@@ -1,0 +1,154 @@
+﻿@model CineChat.Models.Movie
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Movie</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ImdbID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImdbID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.releasedate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.releasedate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.duration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.duration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ratingImdb)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ratingImdb)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+    </dl>
+    <table>
+@foreach (var item in Model)
+    {
+    <div class="jumbotron text-center">
+        <h1 class="text-left">My List of Movies</h1>
+        <hr>
+        <div class="panel panel-default ">
+            <div class="panel-body ">
+                <div class="col-sm-3">
+
+                    <img src="/Content/Images/TheAmazingSpiderMan.jpg" class="img-thumbnail  pull-left img-responsive ">
+                </div>
+                <div class="col-sm-9">
+                    <table class="">
+                        <thead>
+                            <tr>
+                                <th class="top-left">Title:</th>
+                                <th> @Html.DisplayFor(modelItem => item.title) </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-left">IMDB ID:</td>
+                                <td class="text-left">@Html.DisplayFor(model => model.ImdbID) </td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-left">Realesed:</td>
+                                <td class="text-left">@Html.DisplayFor(modelItem => item.releasedate)</td>
+                            </tr>
+
+
+                            <tr>
+                                <td class="text-left">Duration:</td>
+                                <td class="text-left">@Html.DisplayFor(modelItem => item.duration)</td>
+                            </tr>
+
+
+                            <tr>
+                                <td class="text-left">Ratting Imdb:</td>
+                                <td class="text-left">@Html.DisplayFor(modelItem => item.ratingImdb)</td>
+                            </tr>
+
+                            <tr>
+                                <td class="top-left">Description: </td>
+                                <td class="text-left h4">
+                                    @Html.DisplayFor(modelItem => item.description)
+                                    <br />
+                                    <span class="h5 pull-right">
+
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+
+                                        <span class="glyphicon glyphicon-search h5" aria-hidden="true">
+                                        </span> |
+
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
+                                        @Html.ActionLink("Dislike", "Dislike", new { id = item.ID })
+                                        <span class="glyphicon glyphicon-thumbs-down"></span>
+
+                                    </span>
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+        <tr>
+            <th>Categories:</th>
+        </tr>
+        @foreach (var item in Model.categories)
+        {
+        @:<tr>
+            @:<td>
+                @Html.DisplayFor(modelItem => item.description)
+            @:</td>
+        @:</tr>
+        }
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
