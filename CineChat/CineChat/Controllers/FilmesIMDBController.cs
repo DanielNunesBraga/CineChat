@@ -42,7 +42,8 @@ namespace CineChat.Controllers
             myClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             //alterei o codigo de maneira a responder da mesma maneira como se estivesse a trabalhar como async
-            HttpResponseMessage response = myClient.GetAsync("?s=" + searchString + "&y=&plot=short&r=json&type=movie").Result;
+            HttpResponseMessage response = myClient.GetAsync("?s=" + searchString + "&r=json&type=movie").Result;
+            //HttpResponseMessage response = myClient.GetAsync("?s=" + searchString + "&y=&plot=short&r=json&type=movie").Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -51,8 +52,18 @@ namespace CineChat.Controllers
                 var filmes = response.Content.ReadAsAsync<SearchImdb>().Result;
                 if (filmes != null)
                 {
-                    result = filmes.Search;
-
+                    foreach(var filme in filmes.Search)
+                    {
+                        HttpResponseMessage response_detail = myClient.GetAsync("?i=" + filme.ImdbID + "&plot=short&r=json").Result;
+                        if (response_detail.IsSuccessStatusCode)
+                        {
+                            var filmes_detail = response_detail.Content.ReadAsAsync<FilmesIMDB>().Result;
+                            if (filmes_detail != null)
+                            {
+                                result.Add(filmes_detail);
+                            }
+                        }
+                    }
                     return result;
                 }
             }

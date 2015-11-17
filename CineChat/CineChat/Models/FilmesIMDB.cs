@@ -7,11 +7,11 @@ namespace CineChat.Models
 {
     public class FilmesIMDB
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Title { get; set; }
 //        public string Category { get; set; }
-        public int Year { get; set; }
-        public DateTime Released { get; set; }
+        public string Year { get; set; }
+        public string Released { get; set; }
         public string RunTime { get; set; }
         public string Genre { get; set; }
         public string Director { get; set; }
@@ -21,7 +21,7 @@ namespace CineChat.Models
         public string Language { get; set; }
         public string Awards { get; set; }
         public string Poster { get; set; }
-        public int Metascore { get; set; }
+        public string Metascore { get; set; }
         public float RatingIMDB { get; set; }
         public string ImdbID { get; set; }
         public string IMDBVotes { get; set; }
