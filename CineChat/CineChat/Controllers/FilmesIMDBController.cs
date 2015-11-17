@@ -31,7 +31,7 @@ namespace CineChat.Controllers
         [System.Web.Http.HttpPost]
         public ActionResult Search(string id)
         {
-            
+            //search list of movies
             IEnumerable<FilmesIMDB> movies = new List<FilmesIMDB>();
             string searchString = id;
             if (!String.IsNullOrEmpty(searchString))
@@ -47,68 +47,93 @@ namespace CineChat.Controllers
         [System.Web.Http.HttpPost]
         public ActionResult Like(string imdbID)
         {
+            //add movie to mymovies list
             IEnumerable<FilmesIMDB> imdbmovie = new List<FilmesIMDB>();
             string searchString = imdbID;
             if (!String.IsNullOrEmpty(searchString))
             {
                 imdbmovie = apiSearch(searchString, true);
-            }
 
-            Movie newmovie = new Movie();
-            string currentUserId = User.Identity.GetUserId();
-            var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
-            var imdb_movie = imdbmovie.FirstOrDefault();
-            var checkmovie = db.movie.FirstOrDefault(m => m.ImdbID == imdb_movie.ImdbID);
-            
-            if (checkmovie == null)
-            {
-                newmovie.ImdbID = imdb_movie.ImdbID;
-                newmovie.poster = imdb_movie.Poster;
-                newmovie.title = imdb_movie.Title;
-                newmovie.description = imdb_movie.Plot;
-                newmovie.ratingImdb = imdb_movie.imdbRating;
-                DateTime tempDate;
-                if (DateTime.TryParse(imdb_movie.Released, out tempDate) == true)
+
+                Movie newmovie = new Movie();
+                string currentUserId = User.Identity.GetUserId();
+                var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+                var imdb_movie = imdbmovie.FirstOrDefault();
+                var checkmovie = db.movie.FirstOrDefault(m => m.ImdbID == imdb_movie.ImdbID);
+                //verify if movie already exists
+                if (checkmovie == null)//if not, create new movie on db
                 {
-                    // succeeded ...
-                    newmovie.releasedate = tempDate;
+                    newmovie.ImdbID = imdb_movie.ImdbID;
+                    newmovie.poster = imdb_movie.Poster;
+                    newmovie.title = imdb_movie.Title;
+                    newmovie.description = imdb_movie.Plot;
+                    newmovie.ratingImdb = imdb_movie.imdbRating;
+                    DateTime tempDate;//convert date of imdb to datetime
+                    if (DateTime.TryParse(imdb_movie.Released, out tempDate) == true)
+                    {
+                        // succeeded ...
+                        newmovie.releasedate = tempDate;
+                    }
+                    else
+                    {
+                        newmovie.releasedate = DateTime.Now;
+                    }
+                    //remove min from imdb data 000 min
+                    int temptime;
+                    string time = "";
+
+                    for (int i = 0; i < imdb_movie.RunTime.Length; i++)
+                    {
+                        if (Char.IsDigit(imdb_movie.RunTime[i]))
+                            time += imdb_movie.RunTime[i];
+                    }
+
+                    //convert data to datetime and sum the minuts
+                    if (Int32.TryParse(time, out temptime))
+                    {
+                        DateTime dt = DateTime.Now.Date;
+                        dt = dt.AddMinutes(temptime);
+                        newmovie.duration = dt;
+                    }
+                    else
+                    {
+                        newmovie.duration = DateTime.Now;
+                    }
+
+                    //create necessary categories in db_ check if already exist
+                    List<Category> catlist = new List<Category>();
+                    string[] CategoryNames = imdb_movie.Genre.Split(',').Select(sValue => sValue.Trim()).ToArray();
+                    foreach(string catn in CategoryNames)
+                    {
+                        var checkcat = db.categorie.FirstOrDefault(c => c.description == catn);
+                        Category newcat = null;
+                        if (checkcat == null)
+                        {
+                            newcat = new Category();
+                            newcat.description = catn;
+                            db.categorie.Add(newcat);
+                        }
+                        else
+                        {
+                            newcat = checkcat;
+                        }
+                        catlist.Add(newcat);
+                    }
+                    //add movie to db _ movie does not exist
+                    newmovie.categories = catlist;
+                    db.movie.Add(newmovie);
+                    currentUser.likes.Add(newmovie);
+
                 }
                 else
                 {
-                    newmovie.releasedate = DateTime.Now;
+                    //movie exist_ relate with user -- like
+                    currentUser.likes.Add(checkmovie);
                 }
-
-                int temptime;
-                string time = "";
-
-                for (int i = 0; i < imdb_movie.RunTime.Length; i++)
-                {
-                    if (Char.IsDigit(imdb_movie.RunTime[i]))
-                        time += imdb_movie.RunTime[i];
-                }
-                
-
-                if (Int32.TryParse(time, out temptime))
-                {
-                    DateTime dt = DateTime.Now.Date;
-                    dt = dt.AddMinutes(temptime);
-                    newmovie.duration = dt;
-                }
-                else
-                {
-                    newmovie.duration = DateTime.Now;
-                }
-
-                db.movie.Add(newmovie);
-                currentUser.likes.Add(newmovie);
-                
+                db.SaveChanges(); //save db changes
+                return RedirectToAction("MyMovies", "Movies");//go to my movie list
             }
-            else
-            {
-                currentUser.likes.Add(checkmovie);
-            }
-            db.SaveChanges();
-            return RedirectToAction("MyMovies", "Movies");
+            return RedirectToAction("Index", "Home");
         }
 
         private IEnumerable<FilmesIMDB> apiSearch(string searchString, bool like)
@@ -120,6 +145,7 @@ namespace CineChat.Controllers
             myClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             List<FilmesIMDB> result = new List<FilmesIMDB>();
             if (!like)
+
             {
                 //alterei o codigo de maneira a responder da mesma maneira como se estivesse a trabalhar como async
                 HttpResponseMessage response = myClient.GetAsync("?s=" + searchString + "&r=json&type=movie").Result;
