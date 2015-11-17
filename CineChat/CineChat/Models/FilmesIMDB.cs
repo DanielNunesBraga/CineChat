@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +12,7 @@ namespace CineChat.Models
         public string Title { get; set; }
 //        public string Category { get; set; }
         public int Year { get; set; }
+        [DataType(DataType.Date)]
         public DateTime Released { get; set; }
         public string RunTime { get; set; }
         public string Genre { get; set; }

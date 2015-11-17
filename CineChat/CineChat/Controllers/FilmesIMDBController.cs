@@ -42,7 +42,7 @@ namespace CineChat.Controllers
             myClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             //alterei o codigo de maneira a responder da mesma maneira como se estivesse a trabalhar como async
-            HttpResponseMessage response = myClient.GetAsync("?t=" + searchString + "&y=&plot=short&r=json").Result;
+            HttpResponseMessage response = myClient.GetAsync("?t=" + searchString + "&type=movie&y=&plot=short&r=json").Result;
 
             if (response.IsSuccessStatusCode)
             {
