@@ -24,13 +24,13 @@ namespace CineChat.Controllers
         public ActionResult Search(string id)
         {
             
-            IEnumerable<FilmesIMDB> filmes = new List<FilmesIMDB>();
+            IEnumerable<FilmesIMDB> movies = new List<FilmesIMDB>();
             string searchString = id;
             if (!String.IsNullOrEmpty(searchString))
             {
-                filmes = apiSearch(searchString);
+                movies = apiSearch(searchString);
             }
-            return View(filmes);
+            return View(movies);
         }
 
         private IEnumerable<FilmesIMDB> apiSearch(string searchString)
@@ -49,18 +49,18 @@ namespace CineChat.Controllers
             {
                 List<FilmesIMDB> result = new List<FilmesIMDB>();
                 //link: http://stackoverflow.com/questions/19448690/how-to-consume-a-webapi-from-asp-net-web-api-to-store-result-in-database
-                var filmes = response.Content.ReadAsAsync<SearchImdb>().Result;
-                if (filmes != null)
+                var movies = response.Content.ReadAsAsync<SearchImdb>().Result;
+                if (movies != null)
                 {
-                    foreach(var filme in filmes.Search)
+                    foreach (var movie in movies.Search)
                     {
-                        HttpResponseMessage response_detail = myClient.GetAsync("?i=" + filme.ImdbID + "&plot=short&r=json").Result;
+                        HttpResponseMessage response_detail = myClient.GetAsync("?i=" + movie.ImdbID + "&plot=short&r=json").Result;
                         if (response_detail.IsSuccessStatusCode)
                         {
-                            var filmes_detail = response_detail.Content.ReadAsAsync<FilmesIMDB>().Result;
-                            if (filmes_detail != null)
+                            var movies_detail = response_detail.Content.ReadAsAsync<FilmesIMDB>().Result;
+                            if (movies_detail != null)
                             {
-                                result.Add(filmes_detail);
+                                result.Add(movies_detail);
                             }
                         }
                     }
