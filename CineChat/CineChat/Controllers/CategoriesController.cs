@@ -22,24 +22,9 @@ namespace CineChat.Controllers
             return View(db.categorie.ToList());
         }
 
-        // GET: Categories/Details/5
-        [Authorize]
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Category category = db.categorie.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category);
-        }
-
         // GET: Categories/Create
         [Authorize]
+        [Authorize(Roles = "AppAdmin")]
         public ActionResult Create()
         {
             return View();
@@ -49,6 +34,7 @@ namespace CineChat.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
+        [Authorize(Roles = "AppAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,description")] Category category)
@@ -65,6 +51,7 @@ namespace CineChat.Controllers
 
         // GET: Categories/Edit/5
         [Authorize]
+        [Authorize(Roles = "AppAdmin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -83,6 +70,7 @@ namespace CineChat.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
+        [Authorize(Roles = "AppAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,description")] Category category)
@@ -98,6 +86,7 @@ namespace CineChat.Controllers
 
         // GET: Categories/Delete/5
         [Authorize]
+        [Authorize(Roles = "AppAdmin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -114,6 +103,7 @@ namespace CineChat.Controllers
 
         // POST: Categories/Delete/5
         [Authorize]
+        [Authorize(Roles = "AppAdmin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

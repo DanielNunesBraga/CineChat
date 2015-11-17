@@ -1,5 +1,8 @@
 namespace CineChat.Migrations
 {
+    using Models;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -15,6 +18,25 @@ namespace CineChat.Migrations
 
         protected override void Seed(CineChat.DAL.ApplicationDbContext context)
         {
+
+            if (!context.Roles.Any(r => r.Name == "AppAdmin"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "AppAdmin" };
+
+                manager.Create(role);
+            }
+
+            if (!context.Users.Any(u => u.UserName == "admin@system.com"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                var user = new ApplicationUser { UserName = "admin@system.com" };
+
+                manager.Create(user, "systemadmin");
+                manager.AddToRole(user.Id, "AppAdmin");
+            }
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -28,5 +50,6 @@ namespace CineChat.Migrations
             //    );
             //
         }
+
     }
 }
