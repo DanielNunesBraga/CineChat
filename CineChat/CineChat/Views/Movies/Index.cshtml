@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<CineChat.Models.Movie>
+@using Microsoft.AspNet.Identity;
+@using CineChat.DAL;
 
 @{
+    ApplicationDbContext db = new ApplicationDbContext();
     ViewBag.Title = "Index";
 }
 
@@ -32,7 +35,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.ImdbID)
@@ -53,10 +57,22 @@
             @Html.DisplayFor(modelItem => item.description)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID }) | 
-            @Html.ActionLink("Like", "Like", new { id = item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID }) | 
+            @{
+                string CurrentUserID = User.Identity.GetUserId();
+                var CurrentUser = db.Users.FirstOrDefault(u => u.Id == CurrentUserID);
+                if (CurrentUser.likes.Contains(item))
+                {
+                    @Html.ActionLink("Dislike", "Dislike", new { id = item.ID })
+                }
+                else
+                {
+                    @Html.ActionLink("Like", "Like", new { id = item.ID })
+                }
+
+            }
         </td>
     </tr>
 }

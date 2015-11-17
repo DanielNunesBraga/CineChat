@@ -26,32 +26,40 @@
                     <!-- <li>@Html.ActionLink("Home", "Index", "Home")</li> 
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li> -->
-                    <li>@Html.ActionLink("Chat","Index","Chats")</li>
+                    <li>@Html.ActionLink("Chat", "Index", "Chats")</li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Adventure</a></li>
-                            <li><a href="#">Comedy</a></li>
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Horror(+16)</a></li>
-                            <li><a href="#">Animation</a></li>
-                            <li><a href="#">Drama</a></li>
-                            <li><a href="#">Crime(+16)</a></li>
-                            <li><a href="#">Sport</a></li>
-                            <li><a href="#">XXX(+18)</a></li>
                             <li><a href="/Categories">View All</a></li>
-                            <li><a href="/Categories/Create">Create new category</a></li>
+                            @{
+                                if (User.IsInRole("AppAdmin"))
+                                {
+                                    <li><a href="/Categories/Create">Create new category</a></li>
+                                }
+                             }
                         </ul>
                     </li>
                     <li>@Html.ActionLink("TopRated", "TopRated", "Home")</li>
-                    <li>@Html.ActionLink("Movies", "Index", "Movies")</li>
-                    <form class="navbar-form navbar-right" role="search" action="/FilmesIMDB/Search" method="post">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Movies, Directors, Actors" name="id">
-                        </div>
-                        <button type="submit" class="btn btn-default">Search</button>
-                    </form>
-                </ul>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movies <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("MyMovies", "MyMovies", "Movies")</li>
+                            <li>@Html.ActionLink("All User Movies", "Index", "Movies")</li>
+                            @{
+                                if (User.IsInRole("AppAdmin"))
+                                {
+                                    <li>@Html.ActionLink("Manually Add Movie", "Create", "Movies")</li>
+                                }
+                            }
+                        </ul>
+                    </li>
+                            <form class="navbar-form navbar-right" role="search" action="/FilmesIMDB/Search" method="post">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Movies, Directors, Actors" name="id">
+                                </div>
+                                <button type="submit" class="btn btn-default">Search</button>
+                            </form>
+                        </ul>
                 @Html.Partial("_LoginPartial")
             </div>
             

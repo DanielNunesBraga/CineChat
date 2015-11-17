@@ -92,7 +92,7 @@ namespace CineChat.Controllers
 
 
         // GET: Movies/Create
-        [Authorize]
+        [Authorize(Roles = "AppAdmin")]
         public ActionResult Create()
         {
             var allCategory = db.categorie;
@@ -113,7 +113,7 @@ namespace CineChat.Controllers
         // POST: Movies/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
+        [Authorize(Roles = "AppAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,ImdbID,title,releasedate,duration,ratingImdb,description,poster")] Movie movie, string[] selectedCategories)
@@ -167,7 +167,7 @@ namespace CineChat.Controllers
         }
 
         // GET: Movies/Edit/5
-        [Authorize]
+        [Authorize(Roles = "AppAdmin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -210,7 +210,7 @@ namespace CineChat.Controllers
         // POST: Movies/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
+        [Authorize(Roles = "AppAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int? id, string[] selectedCategories)
@@ -278,7 +278,7 @@ namespace CineChat.Controllers
 
 
         // GET: Movies/Delete/5
-        [Authorize]
+        [Authorize(Roles = "AppAdmin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -294,7 +294,7 @@ namespace CineChat.Controllers
         }
 
         // POST: Movies/Delete/5
-        [Authorize]
+        [Authorize(Roles = "AppAdmin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
