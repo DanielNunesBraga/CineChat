@@ -3,7 +3,7 @@ namespace CineChat.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class new_start : DbMigration
+    public partial class reboot_db : DbMigration
     {
         public override void Up()
         {
@@ -73,12 +73,13 @@ namespace CineChat.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        ImdbID = c.Int(nullable: false),
+                        ImdbID = c.String(nullable: false),
                         title = c.String(nullable: false, maxLength: 100),
                         releasedate = c.DateTime(nullable: false),
                         duration = c.DateTime(nullable: false),
                         ratingImdb = c.Double(nullable: false),
                         description = c.String(nullable: false, maxLength: 1000),
+                        poster = c.String(),
                     })
                 .PrimaryKey(t => t.ID);
             

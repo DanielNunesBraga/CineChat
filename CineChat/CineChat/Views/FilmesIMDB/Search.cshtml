@@ -4,20 +4,20 @@
     ViewBag.Title = "Search";
 }
 
-<h2>Search</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2>Search Results for: <i>@ViewBag.searchValue</i></h2>
 
 <div class="well">
 
     @foreach (var item in Model)
     {
+        using (Html.BeginForm("Like", "FilmesIMDB", FormMethod.Post))
+        {
+            @Html.Hidden("imdbID", item.ImdbID)
         <div class="panel panel-default ">
             <div class="panel-body ">
                 <div class="col-sm-4">
                     <img src="@Html.DisplayFor(modelItem => item.Poster)" />
+
                 </div>
                 <div class="col-sm-8">
                     <table class=" ">
@@ -71,8 +71,8 @@
                                 <td>@Html.DisplayFor(modelItem => item.Metascore) </td>
                             </tr>
                             <tr>
-                                <td>@Html.DisplayNameFor(model => model.RatingIMDB): </td>
-                                <td>@Html.DisplayFor(modelItem => item.RatingIMDB) </td>
+                                <td>@Html.DisplayNameFor(model => model.imdbRating): </td>
+                                <td>@Html.DisplayFor(modelItem => item.imdbRating) </td>
                             </tr>
                             <tr>
                                 <td>@Html.DisplayNameFor(model => model.ImdbID): </td>
@@ -90,10 +90,18 @@
                                 <td>@Html.DisplayNameFor(model => model.Response): </td>
                                 <td>@Html.DisplayFor(modelItem => item.Response) </td>
                             </tr>
+                            <tr>
+                                <td>
+
+                                </td>
+                                <td><input type="submit" value="Like" class="btn btn-default btn-lg" /></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div>}
+        </div>
+        }
+    }
 </div>
 
