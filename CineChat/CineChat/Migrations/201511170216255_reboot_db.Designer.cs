@@ -7,13 +7,13 @@ namespace CineChat.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class movie_poster : IMigrationMetadata
+    public sealed partial class reboot_db : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(movie_poster));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(reboot_db));
         
         string IMigrationMetadata.Id
         {
-            get { return "201511162151580_movie_poster"; }
+            get { return "201511170216255_reboot_db"; }
         }
         
         string IMigrationMetadata.Source

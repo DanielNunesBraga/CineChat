@@ -12,17 +12,15 @@ namespace CineChat.Models
         public int ID { get; set; }
 
         [Required]
-        public int ImdbID { get; set; }
+        public string ImdbID { get; set; }
 
         [Required]
         [StringLength(100, MinimumLength = 3)]
         public string title { get; set; }
 
-        [Required]
         [DataType(DataType.Date)]
         public DateTime releasedate { get; set; }
 
-        [Required]
         [DataType(DataType.Time)]
         public DateTime duration { get; set; }
 
