@@ -42,17 +42,26 @@ namespace CineChat.Controllers
             myClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             //alterei o codigo de maneira a responder da mesma maneira como se estivesse a trabalhar como async
-            HttpResponseMessage response = myClient.GetAsync("?t=" + searchString + "&y=&plot=short&r=json").Result;
+            HttpResponseMessage response = myClient.GetAsync("?s=" + searchString + "&y=&plot=short&r=json&type=movie").Result;
 
             if (response.IsSuccessStatusCode)
             {
-                //link: http://stackoverflow.com/questions/19448690/how-to-consume-a-webapi-from-asp-net-web-api-to-store-result-in-database
-                var filmes = response.Content.ReadAsAsync<FilmesIMDB>().Result;
                 List<FilmesIMDB> result = new List<FilmesIMDB>();
-                result.Add(filmes);
-                return result;
+                //link: http://stackoverflow.com/questions/19448690/how-to-consume-a-webapi-from-asp-net-web-api-to-store-result-in-database
+                var filmes = response.Content.ReadAsAsync<SearchImdb>().Result;
+                if (filmes != null)
+                {
+                    result = filmes.Search;
+
+                    return result;
+                }
             }
             return new List<FilmesIMDB>();
+        }
+
+        public class SearchImdb
+        {
+            public List<FilmesIMDB> Search { get; set; }
         }
        
     }
