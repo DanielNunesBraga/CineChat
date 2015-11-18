@@ -13,94 +13,88 @@
         using (Html.BeginForm("Like", "FilmesIMDB", FormMethod.Post))
         {
             @Html.Hidden("imdbID", item.ImdbID)
-        <div class="panel panel-default ">
-            <div class="panel-body ">
-                <div class="col-sm-4">
-                    <img src="@Html.DisplayFor(modelItem => item.Poster)" />
+            <div class="panel panel-default ">
+                <div class="panel-body ">
+                    <div class="col-sm-4">
+                        <img src="@Html.DisplayFor(modelItem => item.Poster)" />
 
-                </div>
-                <div class="col-sm-8">
-                    <table class=" ">
-                        <tbody>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.Title): </td>
-                                <td>@Html.DisplayFor(modelItem => item.Title) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.Year): </td>
-                                <td>@Html.DisplayFor(modelItem => item.Year) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.Released): </td>
-                                <td>@Html.DisplayFor(modelItem => item.Released) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.RunTime): </td>
-                                <td>@Html.DisplayFor(modelItem => item.RunTime) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.Genre): </td>
-                                <td>@Html.DisplayFor(modelItem => item.Genre) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.Director): </td>
-                                <td>@Html.DisplayFor(modelItem => item.Director) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.Writer): </td>
-                                <td>@Html.DisplayFor(modelItem => item.Writer) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.Actors): </td>
-                                <td>@Html.DisplayFor(modelItem => item.Actors) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.Language): </td>
-                                <td>@Html.DisplayFor(modelItem => item.Language) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.Awards): </td>
-                                <td>@Html.DisplayFor(modelItem => item.Awards) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.Plot): </td>
-                                <td>@Html.DisplayFor(modelItem => item.Plot) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.Metascore): </td>
-                                <td>@Html.DisplayFor(modelItem => item.Metascore) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.imdbRating): </td>
-                                <td>@Html.DisplayFor(modelItem => item.imdbRating) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.ImdbID): </td>
-                                <td>@Html.DisplayFor(modelItem => item.ImdbID) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.IMDBVotes): </td>
-                                <td>@Html.DisplayFor(modelItem => item.IMDBVotes) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.Type): </td>
-                                <td>@Html.DisplayFor(modelItem => item.Type) </td>
-                            </tr>
-                            <tr>
-                                <td>@Html.DisplayNameFor(model => model.Response): </td>
-                                <td>@Html.DisplayFor(modelItem => item.Response) </td>
-                            </tr>
-                            <tr>
-                                <td>
-
-                                </td>
-                                <td><input type="submit" value="Like" class="btn btn-default btn-lg" /></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    </div>
+                    <div class="col-sm-8">
+                        <table class=" ">
+                            <tbody>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.Title): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Title) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.Year): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Year) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.Released): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Released) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.RunTime): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.RunTime) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.Genre): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Genre) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.Director): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Director) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.Writer): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Writer) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.Actors): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Actors) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.Language): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Language) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.Awards): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Awards) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.Plot): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Plot) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.Metascore): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Metascore) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.imdbRating): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.imdbRating) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.ImdbID): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.ImdbID) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.IMDBVotes): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.IMDBVotes) </td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.Type): </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Type) </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input type="submit" value="Like" class="btn btn-default btn-lg" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
         }
     }
 </div>

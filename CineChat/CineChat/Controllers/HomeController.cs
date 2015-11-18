@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CineChat.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,11 @@ namespace CineChat.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public ActionResult Index()
         {
-            return View();
+            return View(db.movie.OrderBy(x => x.likes.Count).Take(3));
         }
 
         public ActionResult About()

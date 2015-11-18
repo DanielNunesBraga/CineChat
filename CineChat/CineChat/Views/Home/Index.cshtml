@@ -1,11 +1,14 @@
-﻿@{
-    ViewBag.Title = "CineChat";
+﻿
+@model IEnumerable<CineChat.Models.Movie>
+    @{ViewBag.Title = "CineChat";
 }
 
 
 
 <div class="row">
-    
+    <div>
+         
+    </div>
   
     <div class="panel panel-default">
         <div class="panel-body">
@@ -15,20 +18,18 @@
             <img src="/Content/Images/Joker.jpg" class="img-thumbnail" width="140" height="140">
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <h1>Most Requested</h1>
-            <img src="/Content/Images/image1.jpg" class="img-thumbnail img-responsive" width="140" height="140">
-            <img src="/Content/Images/image3.jpg" class="img-thumbnail" width="140" height="140">
-            <img src="/Content/Images/Joker.jpg" class="img-thumbnail" width="140" height="140">
-        </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
             <h1>Top Rated</h1>
-            <img src="/Content/Images/image1.jpg" class="img-thumbnail img-responsive" width="140" height="140">
-            <img src="/Content/Images/image3.jpg" class="img-thumbnail" width="160" height="160">
-            <img src="/Content/Images/Joker.jpg" class="img-thumbnail" width="140" height="140">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="@Html.DisplayFor(modelItem => item.poster)">
+                    </td>
+                </tr>
+            }
         </div>
     </div>
     <div class="panel panel-default">
@@ -39,4 +40,5 @@
             <img src="/Content/Images/Joker.jpg" class="img-thumbnail" width="140" height="140">
         </div>
     </div>
+    
 </div>
