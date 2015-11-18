@@ -63,7 +63,7 @@
             @{
                 string CurrentUserID = User.Identity.GetUserId();
                 var CurrentUser = db.Users.FirstOrDefault(u => u.Id == CurrentUserID);
-                if (CurrentUser.likes.Contains(item))
+                if (CurrentUser.likes.Where(i => i.ID==item.ID).Count()>0)
                 {
                     @Html.ActionLink("Dislike", "Dislike", new { id = item.ID })
                 }
