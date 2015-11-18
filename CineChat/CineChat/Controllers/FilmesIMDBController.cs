@@ -27,8 +27,8 @@ namespace CineChat.Controllers
             return View();
         }
 
-        [System.Web.Http.Authorize]
-        [System.Web.Http.HttpPost]
+        [System.Web.Mvc.Authorize]
+        [System.Web.Mvc.HttpPost]
         public ActionResult Search(string id)
         {
             //search list of movies
@@ -67,7 +67,6 @@ namespace CineChat.Controllers
                     newmovie.poster = imdb_movie.Poster;
                     newmovie.title = imdb_movie.Title;
                     newmovie.description = imdb_movie.Plot;
-                    newmovie.ratingImdb = imdb_movie.imdbRating;
                     DateTime tempDate;//convert date of imdb to datetime
                     if (DateTime.TryParse(imdb_movie.Released, out tempDate) == true)
                     {
@@ -79,7 +78,8 @@ namespace CineChat.Controllers
                         newmovie.releasedate = DateTime.Now;
                     }
                     //remove min from imdb data 000 min
-                    int temptime;
+                    int temptime = 0;
+                    int temptime2 = 0;
                     string time = "";
 
                     for (int i = 0; i < imdb_movie.RunTime.Length; i++)
@@ -91,8 +91,9 @@ namespace CineChat.Controllers
                     //convert data to datetime and sum the minuts
                     if (Int32.TryParse(time, out temptime))
                     {
+                        temptime2 = temptime2 + temptime;
                         DateTime dt = DateTime.Now.Date;
-                        dt = dt.AddMinutes(temptime);
+                        dt = dt.AddMinutes(temptime2);
                         newmovie.duration = dt;
                     }
                     else
@@ -100,6 +101,15 @@ namespace CineChat.Controllers
                         newmovie.duration = DateTime.Now;
                     }
 
+                    float rate = 0;
+                    if (float.TryParse(imdb_movie.imdbRating, out rate))
+                    {
+                        newmovie.ratingImdb = rate;
+                    }
+                    else
+                    {
+                        newmovie.ratingImdb = 0;
+                    }
                     //create necessary categories in db_ check if already exist
                     List<Category> catlist = new List<Category>();
                     string[] CategoryNames = imdb_movie.Genre.Split(',').Select(sValue => sValue.Trim()).ToArray();
