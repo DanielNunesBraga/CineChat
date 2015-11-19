@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CineChat.Models;
 
 namespace CineChat.Controllers
 {
@@ -13,7 +14,20 @@ namespace CineChat.Controllers
 
         public ActionResult Index()
         {
-            return View(db.movie.OrderBy(x => x.likes.Count).Take(3));
+            ViewBag.counts = "";
+            List<Movie> movieliked =new List<Movie>();
+            var query = db.movie.ToList().Select(x => new
+            {
+                movieID = x.ID,
+                like_count = x.likes.Count
+            }).OrderByDescending(x => x.like_count).Take(4);
+            foreach(var movie in query)
+            {
+                Movie addmv = new Movie();
+                addmv = db.movie.FirstOrDefault(m => m.ID == movie.movieID);
+                movieliked.Add(addmv);
+            }
+            return View(movieliked);
         }
 
         public ActionResult About()
@@ -51,6 +65,15 @@ namespace CineChat.Controllers
         public ActionResult Chat()
         {
             return View();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

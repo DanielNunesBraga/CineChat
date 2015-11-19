@@ -1,11 +1,15 @@
 ﻿@model IEnumerable<CineChat.Models.FilmesIMDB>
+@using Microsoft.AspNet.Identity;
+@using CineChat.DAL;
+
 
 @{
+    ApplicationDbContext db = new ApplicationDbContext();
     ViewBag.Title = "Search";
 }
 
 <h2>Search Results for: <i>@ViewBag.searchValue</i></h2>
-
+<p class="alert-info">@ViewBag.successlike</p>
 <div class="well">
 
     @foreach (var item in Model)
@@ -13,6 +17,8 @@
         using (Html.BeginForm("Like", "FilmesIMDB", FormMethod.Post))
         {
             @Html.Hidden("imdbID", item.ImdbID)
+            string currSearch = ViewBag.searchValue;
+            @Html.Hidden("searchValue", currSearch)
             <div class="panel panel-default ">
                 <div class="panel-body ">
                     <div class="col-sm-4">
@@ -88,7 +94,21 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><input type="submit" value="Like" class="btn btn-default btn-lg" /></td>
+                                    <td>
+                                        @{
+                                            string CurrentUserID = User.Identity.GetUserId();
+                                            var CurrentUser = db.Users.FirstOrDefault(u => u.Id == CurrentUserID);
+                                            if (CurrentUser.likes.Where(i => i.ImdbID==item.ImdbID).Count()>0)
+                                            {
+                                                int like_id = CurrentUser.likes.FirstOrDefault(lk => lk.ImdbID == item.ImdbID).ID;
+                                                @Html.ActionLink("Dislike", "Dislike", "Movies", new { id = like_id }, new{@class="btn btn-default btn-lg"})
+                                            }
+                                            else
+                                            {
+                                                @:<input type="submit" value="Like" class="btn btn-default btn-lg" />
+                                            }
+}
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

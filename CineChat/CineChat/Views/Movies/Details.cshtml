@@ -1,6 +1,9 @@
 ﻿@model CineChat.Models.Movie
+@using Microsoft.AspNet.Identity;
+@using CineChat.DAL;
 
 @{
+    ApplicationDbContext db = new ApplicationDbContext();
     ViewBag.Title = "Details";
 }
 
@@ -46,10 +49,11 @@
 
                         <tr>
                             <td>Categories:</td>
-                            <td>@foreach (var item in Model.categories)
+                            <td>
+                                @foreach (var item in Model.categories)
                                 {
                                     @Html.DisplayFor(model => item.description)
-                                @:<br />
+                                    @:<br />
                                 }
                             </td>
 
@@ -62,32 +66,39 @@
                             </td>
                         </tr>
 
-                       
 
+
+
+                        <tr>
+                            <td colspan="2">
+                                <br />
+                                <span class="h5 pull-right">
+                                    @{
+                                        if (User.IsInRole("AppAdmin"))
+                                        {
+                                            @Html.ActionLink("Edit", "Edit", new { id = Model.ID })@:&nbsp;|&nbsp;
+                                            @Html.ActionLink("Delete", "Delete", new { id = Model.ID })@:&nbsp;|&nbsp;
+                                        }
+
+                                        string CurrentUserID = User.Identity.GetUserId();
+                                        var CurrentUser = db.Users.FirstOrDefault(u => u.Id == CurrentUserID);
+                                        if (CurrentUser.likes.Where(i => i.ID == Model.ID).Count() > 0)
+                                        {
+                                            @Html.ActionLink("Dislike", "Dislike", new { id = Model.ID })
+                                            @:<span class="glyphicon glyphicon-thumbs-down"></span>
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink("Like", "Like", new { id = Model.ID })
+                                            @:<span class="glyphicon glyphicon-thumbs-up"></span>
+                                        }
+                                    }
+                                    @Html.ActionLink("Back to List", "MyMovies")
+                                </span>
+                            </td>
+                        </tr>
                     </tbody>
-
-
                 </table>
-                <tr>
-                    <td colspan="2">
-                        <br />
-                        <span class="h5 pull-right">
-
-                            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = Model.ID }) 
-
-                            <span class="glyphicon glyphicon-search h5" aria-hidden="true">
-                            </span> |
-
-                            @Html.ActionLink("Delete", "Delete", new { id = Model.ID }) |
-                            @Html.ActionLink("Dislike", "Dislike", new { id = Model.ID })
-                            <span class="glyphicon glyphicon-thumbs-down"></span>
-
-                        </span>
-                    </td>
-
-
-                </tr>
             </div>
         </div>
     </div>
@@ -95,9 +106,3 @@
 
 </div>
 
-
-    </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

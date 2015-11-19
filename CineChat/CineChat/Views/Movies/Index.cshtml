@@ -9,9 +9,7 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -35,46 +33,51 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImdbID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.releasedate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.duration)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ratingImdb)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID }) | 
-            @{
-                string CurrentUserID = User.Identity.GetUserId();
-                var CurrentUser = db.Users.FirstOrDefault(u => u.Id == CurrentUserID);
-                if (CurrentUser.likes.Where(i => i.ID==item.ID).Count()>0)
-                {
-                    @Html.ActionLink("Dislike", "Dislike", new { id = item.ID })
-                }
-                else
-                {
-                    @Html.ActionLink("Like", "Like", new { id = item.ID })
-                }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImdbID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.releasedate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ratingImdb)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @{
+                    if (User.IsInRole("AppAdmin"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID })@:&nbsp;|&nbsp;
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })@:&nbsp;|&nbsp;
+                     }
+                 }
+                 @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                 @{
+                    string CurrentUserID = User.Identity.GetUserId();
+                    var CurrentUser = db.Users.FirstOrDefault(u => u.Id == CurrentUserID);
+                    if (CurrentUser.likes.Where(i => i.ID == item.ID).Count() > 0)
+                    {
+                        @Html.ActionLink("Dislike", "Dislike", new { id = item.ID })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Like", "Like", new { id = item.ID })
+                    }
 
-            }
-        </td>
-    </tr>
-}
+                }
+            </td>
+        </tr>
+    }
 
 </table>

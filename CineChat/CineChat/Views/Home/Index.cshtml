@@ -21,20 +21,25 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
-            <h1>Top Rated</h1>
-            @foreach (var item in Model)
-            {
+            <h1>Most Viewed</h1>
+            <table>
                 <tr>
+                @foreach (var item in Model)
+                {
+
                     <td>
-                        <img src="@Html.DisplayFor(modelItem => item.poster)">
+                        <img src="@Html.DisplayFor(modelItem => item.poster)" width="200">
                     </td>
+
+                }
                 </tr>
-            }
+
+            </table>
         </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
-            <h1>Most Viewed</h1>
+            <h1>Top Rated</h1>
             <img src="/Content/Images/image1.jpg" class="img-thumbnail img-responsive" width="140" height="140">
             <img src="/Content/Images/image2.jpg" class="img-thumbnail" width="140" height="140">
             <img src="/Content/Images/Joker.jpg" class="img-thumbnail" width="140" height="140">

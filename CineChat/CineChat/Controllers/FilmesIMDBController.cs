@@ -24,11 +24,11 @@ namespace CineChat.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index","Home");
         }
 
         [System.Web.Mvc.Authorize]
-        [System.Web.Mvc.HttpPost]
+        //[System.Web.Mvc.HttpPost]
         public ActionResult Search(string id)
         {
             //search list of movies
@@ -38,14 +38,15 @@ namespace CineChat.Controllers
             {
                 movies = apiSearch(searchString, false);
             }
+            ViewBag.successlike = TempData["successlike"];
             ViewBag.searchValue = searchString;
             return View(movies);
         }
-        
-        
-        [System.Web.Http.Authorize]
-        [System.Web.Http.HttpPost]
-        public ActionResult Like(string imdbID)
+
+
+        [System.Web.Mvc.Authorize]
+        [System.Web.Mvc.HttpPost]
+        public ActionResult Like(string imdbID, string searchValue)
         {
             //add movie to mymovies list
             IEnumerable<FilmesIMDB> imdbmovie = new List<FilmesIMDB>();
@@ -100,9 +101,10 @@ namespace CineChat.Controllers
                     {
                         newmovie.duration = DateTime.Now;
                     }
-
-                    float rate = 0;
-                    if (float.TryParse(imdb_movie.imdbRating, out rate))
+                    //convert string rate to double --- . to , and parse
+                    double rate = 0;
+                    imdb_movie.imdbRating = imdb_movie.imdbRating.Replace(".", ",");
+                    if (double.TryParse(imdb_movie.imdbRating, out rate))
                     {
                         newmovie.ratingImdb = rate;
                     }
@@ -141,9 +143,11 @@ namespace CineChat.Controllers
                     currentUser.likes.Add(checkmovie);
                 }
                 db.SaveChanges(); //save db changes
-                return RedirectToAction("MyMovies", "Movies");//go to my movie list
+                TempData["successlike"] = imdb_movie.Title + " added with success";
+                return RedirectToAction("Search", "FilmesIMDB", new { id = searchValue });//go tlast search
             }
-            return RedirectToAction("Index", "Home");
+            TempData["successlike"] = "Failed to add movie";
+            return RedirectToAction("Search", "FilmesIMDB", new { id = searchValue });//go tlast search
         }
 
         private IEnumerable<FilmesIMDB> apiSearch(string searchString, bool like)
@@ -197,6 +201,13 @@ namespace CineChat.Controllers
         {
             public List<FilmesIMDB> Search { get; set; }
         }
-       
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
