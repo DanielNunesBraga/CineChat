@@ -27,6 +27,7 @@ namespace CineChat.Models
         public string IMDBVotes { get; set; }
         public string Type { get; set; }
         public bool Response { get; set; }
+        //public string link { get; set; }
 
 
 

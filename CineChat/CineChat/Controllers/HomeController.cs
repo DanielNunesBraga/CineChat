@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CineChat.Models;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace CineChat.Controllers
 {
@@ -15,13 +17,13 @@ namespace CineChat.Controllers
         public ActionResult Index()
         {
             ViewBag.counts = "";
-            List<Movie> movieliked =new List<Movie>();
+            List<Movie> movieliked = new List<Movie>();
             var query = db.movie.ToList().Select(x => new
             {
                 movieID = x.ID,
                 like_count = x.likes.Count
             }).OrderByDescending(x => x.like_count).Take(4);
-            foreach(var movie in query)
+            foreach (var movie in query)
             {
                 Movie addmv = new Movie();
                 addmv = db.movie.FirstOrDefault(m => m.ID == movie.movieID);
@@ -75,5 +77,6 @@ namespace CineChat.Controllers
             }
             base.Dispose(disposing);
         }
+                
     }
 }
