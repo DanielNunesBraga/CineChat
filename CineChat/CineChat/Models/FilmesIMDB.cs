@@ -9,7 +9,7 @@ namespace CineChat.Models
     {
         //public int Id { get; set; }
         public string Title { get; set; }
-//        public string Category { get; set; }
+        //        public string Category { get; set; }
         public string Year { get; set; }
         public string Released { get; set; }
         public string RunTime { get; set; }
@@ -27,7 +27,7 @@ namespace CineChat.Models
         public string IMDBVotes { get; set; }
         public string Type { get; set; }
         public bool Response { get; set; }
-        //public string link { get; set; }
+
 
 
 

@@ -25,7 +25,7 @@ namespace CineChat.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [System.Web.Mvc.Authorize]
@@ -116,7 +116,7 @@ namespace CineChat.Controllers
                     //create necessary categories in db_ check if already exist
                     List<Category> catlist = new List<Category>();
                     string[] CategoryNames = imdb_movie.Genre.Split(',').Select(sValue => sValue.Trim()).ToArray();
-                    foreach(string catn in CategoryNames)
+                    foreach (string catn in CategoryNames)
                     {
                         var checkcat = db.categorie.FirstOrDefault(c => c.description == catn);
                         Category newcat = null;
@@ -156,23 +156,20 @@ namespace CineChat.Controllers
             HttpClient myClient = new HttpClient();
             // New code:
             myClient.BaseAddress = new Uri("http://www.omdbapi.com/");
-            //myClient.BaseAddress = new Uri("http://www.myapifilms.com/imdb/");
-             
             myClient.DefaultRequestHeaders.Accept.Clear();
             myClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            
-            
+
+
             List<FilmesIMDB> result = new List<FilmesIMDB>();
             if (!like)
-
             {
-                
+
                 //alterei o codigo de maneira a responder da mesma maneira como se estivesse a trabalhar como async
                 HttpResponseMessage response = myClient.GetAsync("?s=" + searchString + "&r=json&type=movie").Result;
-              //HttpResponseMessage response = myClient.GetAsync("?s=" + searchString + "&y=&plot=short&r=json&type=movie").Result;
+                //HttpResponseMessage response = myClient.GetAsync("?s=" + searchString + "&y=&plot=short&r=json&type=movie").Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    
+
                     var movies = response.Content.ReadAsAsync<SearchImdb>().Result;
                     if (movies != null && movies.Search != null)
                     {

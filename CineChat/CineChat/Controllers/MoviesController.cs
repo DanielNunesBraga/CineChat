@@ -39,7 +39,8 @@ namespace CineChat.Controllers
         [Authorize]
         public ActionResult Dislike(int? id)
         {
-            if (id==null){
+            if (id == null)
+            {
                 return RedirectToAction("MyMovies");
             }
             string currentUserId = User.Identity.GetUserId();
@@ -118,7 +119,7 @@ namespace CineChat.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,ImdbID,title,releasedate,duration,ratingImdb,description,poster")] Movie movie, string[] selectedCategories)
         {
-            
+
             if (ModelState.IsValid && selectedCategories != null)
             {
                 //get current user
@@ -139,7 +140,7 @@ namespace CineChat.Controllers
 
                 //add movie to current user
                 currentUser.likes.Add(movie);
-                
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -151,7 +152,7 @@ namespace CineChat.Controllers
             foreach (var category in allCategory)
             {
                 cat_selected = false;
-                if(selectedCategories.Contains(category.ID.ToString()))
+                if (selectedCategories.Contains(category.ID.ToString()))
                 {
                     cat_selected = true;
                 }
@@ -175,7 +176,7 @@ namespace CineChat.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //Movie movie = db.movie.Find(id);
-            Movie movie = db.movie.Include(i => i.categories).Where(i => i.ID == id ).Single() ;
+            Movie movie = db.movie.Include(i => i.categories).Where(i => i.ID == id).Single();
 
             PopulateCategoryData(movie);
 
