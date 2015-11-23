@@ -7,31 +7,31 @@
 
 <div class="row">
     <div>
-         
+
     </div>
-  
+
     <div class="panel panel-default">
         <div class="panel-body">
             <h1>Recently Released</h1>
-            <img src="/Content/Images/image1.jpg" class="img-thumbnail img-responsive" width="140" height="140">
+            <img src="/Content/Images/image1.jpg" class="img-thumbnail" width="140" height="140">
             <img src="/Content/Images/image3.jpg" class="img-thumbnail" width="140" height="140">
             <img src="/Content/Images/Joker.jpg" class="img-thumbnail" width="140" height="140">
         </div>
     </div>
-    </div>
+
     <div class="panel panel-default">
         <div class="panel-body">
             <h1>Most Viewed</h1>
             <table>
                 <tr>
-                @foreach (var item in Model)
-                {
+                    @foreach (var item in Model)
+                    {
 
-                    <td>
-                        <img src="@Html.DisplayFor(modelItem => item.poster)" width="200">
-                    </td>
+                        <td>
+                            <img src="@Html.DisplayFor(modelItem => item.poster)" width="200">
+                        </td>
 
-                }
+                    }
                 </tr>
 
             </table>
@@ -45,5 +45,5 @@
             <img src="/Content/Images/Joker.jpg" class="img-thumbnail" width="140" height="140">
         </div>
     </div>
-    
+
 </div>
