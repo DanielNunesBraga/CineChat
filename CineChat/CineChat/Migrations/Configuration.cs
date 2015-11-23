@@ -37,6 +37,98 @@ namespace CineChat.Migrations
                 manager.Create(user, "systemadmin");
                 manager.AddToRole(user.Id, "AppAdmin");
             }
+
+            if(!context.categorie.Any(c => c.description == "Action"))
+            {
+                var category = new Category();
+                category.description = "Action";
+                context.categorie.Add(category);
+            }
+
+            if (!context.categorie.Any(c => c.description == "Adventure"))
+            {
+                var category = new Category();
+                category.description = "Adventure";
+                context.categorie.Add(category);
+            }
+
+            if (!context.categorie.Any(c => c.description == "Animation"))
+            {
+                var category = new Category();
+                category.description = "Animation";
+                context.categorie.Add(category);
+            }
+
+            if (!context.categorie.Any(c => c.description == "Biography"))
+            {
+                var category = new Category();
+                category.description = "Biography";
+                context.categorie.Add(category);
+            }  
+
+            if (!context.categorie.Any(c => c.description == "Comedy"))
+            {
+                var category = new Category();
+                category.description = "Comedy";
+                context.categorie.Add(category);
+            }
+
+            if (!context.categorie.Any(c => c.description == "Crime"))
+            {
+                var category = new Category();
+                category.description = "Crime";
+                context.categorie.Add(category);
+            }  
+
+            if (!context.categorie.Any(c => c.description == "Drama"))
+            {
+                var category = new Category();
+                category.description = "Drama";
+                context.categorie.Add(category);
+            }
+
+            if (!context.categorie.Any(c => c.description == "Fantasy"))
+            {
+                var category = new Category();
+                category.description = "Fantasy";
+                context.categorie.Add(category);
+            }
+
+            if (!context.categorie.Any(c => c.description == "Horror"))
+            {
+                var category = new Category();
+                category.description = "Horror";
+                context.categorie.Add(category);
+            } 
+
+            if (!context.categorie.Any(c => c.description == "Mystery"))
+            {
+                var category = new Category();
+                category.description = "Mystery";
+                context.categorie.Add(category);
+            }  
+
+            if (!context.categorie.Any(c => c.description == "Romance"))
+            {
+                var category = new Category();
+                category.description = "Romance";
+                context.categorie.Add(category);
+            }  
+
+            if (!context.categorie.Any(c => c.description == "Sci-Fi"))
+            {
+                var category = new Category();
+                category.description = "Sci-Fi";
+                context.categorie.Add(category);
+            }
+
+            if (!context.categorie.Any(c => c.description == "Thriller"))
+            {
+                var category = new Category();
+                category.description = "Thriller";
+                context.categorie.Add(category);
+            }  
+
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 

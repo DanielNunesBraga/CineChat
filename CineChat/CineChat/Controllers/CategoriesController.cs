@@ -16,14 +16,13 @@ namespace CineChat.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Categories
-        [Authorize]
+        [Authorize(Roles = "AppAdmin")]
         public ActionResult Index()
         {
-            return View(db.categorie.ToList());
+            return View(db.categorie.ToList().OrderBy(c => c.description));
         }
 
         // GET: Categories/Create
-        [Authorize]
         [Authorize(Roles = "AppAdmin")]
         public ActionResult Create()
         {
@@ -33,7 +32,6 @@ namespace CineChat.Controllers
         // POST: Categories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
         [Authorize(Roles = "AppAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -50,7 +48,6 @@ namespace CineChat.Controllers
         }
 
         // GET: Categories/Edit/5
-        [Authorize]
         [Authorize(Roles = "AppAdmin")]
         public ActionResult Edit(int? id)
         {
@@ -69,7 +66,6 @@ namespace CineChat.Controllers
         // POST: Categories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
         [Authorize(Roles = "AppAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -85,7 +81,6 @@ namespace CineChat.Controllers
         }
 
         // GET: Categories/Delete/5
-        [Authorize]
         [Authorize(Roles = "AppAdmin")]
         public ActionResult Delete(int? id)
         {
@@ -102,7 +97,6 @@ namespace CineChat.Controllers
         }
 
         // POST: Categories/Delete/5
-        [Authorize]
         [Authorize(Roles = "AppAdmin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

@@ -20,19 +20,34 @@ namespace CineChat.Controllers
 
         // GET: Movies
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            return View(db.movie.ToList());
+            if (id == null)
+            { 
+                return View(db.movie.ToList()); 
+            }
+            
+            Category category = db.categorie.FirstOrDefault(c => c.ID == id);
+            ViewBag.selectedcat = "- " + category.description;
+            return View(db.movie.ToList().Where(m => m.categories.Contains(category)));
+            
         }
 
 
         //list of movies the user like
         [Authorize]
-        public ActionResult MyMovies()
+        public ActionResult MyMovies(int? id)
         {
             string currentUserId = User.Identity.GetUserId();
             var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
-            return View(currentUser.likes.ToList());
+            if (id == null)
+            {
+                return View(currentUser.likes.ToList());
+            }
+            Category category = db.categorie.FirstOrDefault(c => c.ID == id);
+            ViewBag.selectedcat = "- " + category.description;
+            return View(currentUser.likes.ToList().Where(m => m.categories.Contains(category)));
+            
         }
 
         //dislike movie of user

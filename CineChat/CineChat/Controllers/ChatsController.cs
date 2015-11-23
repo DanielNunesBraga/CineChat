@@ -19,9 +19,15 @@ namespace CineChat.Controllers
 
         // GET: Chats
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            return View(db.chat.ToList());
+            if (id == null)
+            {
+                return View(db.chat.ToList());
+            }
+            Category category = db.categorie.FirstOrDefault(c => c.ID == id);
+            ViewBag.selectedcat = "- " + category.description;
+            return View(db.chat.ToList().Where(ch => ch.category.ID == id));
         }
 
         //get channels i am loged in and possibility to exit that channel
@@ -30,6 +36,14 @@ namespace CineChat.Controllers
         {
             string CurrentUserID = User.Identity.GetUserId();
             return View(db.chatuser.ToList().Where(x => x.user.Id == CurrentUserID));
+        }
+
+        [Authorize]
+        public ActionResult MyChannel()
+        {
+            string CurrentUserID = User.Identity.GetUserId();
+            var CurrentUser = db.Users.FirstOrDefault(u => u.Id == CurrentUserID);
+            return View("Index", CurrentUser.chat.ToList());
         }
 
 
@@ -227,7 +241,18 @@ namespace CineChat.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            string currentUserId = User.Identity.GetUserId();
+            var currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
             Chat chat = db.chat.Find(id);
+            currentUser.chat.Remove(chat);
+            foreach(var loggeduser in db.chatuser.Where(cu => cu.chat.ID == id))
+            {
+                db.chatuser.Remove(loggeduser);
+            }
+            foreach(var post in db.post.Where(p => p.chat.ID == id))
+            {
+                db.post.Remove(post);
+            }
             db.chat.Remove(chat);
             db.SaveChanges();
             return RedirectToAction("Index");
