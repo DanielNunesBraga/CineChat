@@ -1,0 +1,111 @@
+﻿@model IEnumerable<CineChat.MyFilmsAPIModels.Movie>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.originalTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.year)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.releaseDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.urlPoster)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.plot)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.simplePlot)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.idIMDB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.urlIMDB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.metascore)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.votes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.type)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.originalTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.year)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.releaseDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.urlPoster)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.plot)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.simplePlot)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.idIMDB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.urlIMDB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.rating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.metascore)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.rated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.votes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.type)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

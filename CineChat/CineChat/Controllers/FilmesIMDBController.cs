@@ -156,6 +156,7 @@ namespace CineChat.Controllers
             HttpClient myClient = new HttpClient();
             // New code:
             myClient.BaseAddress = new Uri("http://www.omdbapi.com/");
+            //myClient.BaseAddress = new Uri("http://api.myapifilms.com/imdb/idIMDB?title=" + searchString + "&token=a3a9d437-81bc-425f-a1ca-3583f0dbe27f&format=json");
             myClient.DefaultRequestHeaders.Accept.Clear();
             myClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 

@@ -187,6 +187,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
+    <Compile Include="Controllers\MyFilmsAPIController.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -206,10 +207,15 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="MyFilmsAPIModels\About.cs" />
+    <Compile Include="MyFilmsAPIModels\Data.cs" />
+    <Compile Include="MyFilmsAPIModels\Director.cs" />
+    <Compile Include="MyFilmsAPIModels\Movie.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Rates.cs" />
     <Compile Include="Models\Writer.cs" />
+    <Compile Include="MyFilmsAPIModels\Writer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AssignedCategoryData.cs" />
@@ -298,6 +304,7 @@
     <Content Include="Views\Chats\ListLoged.cshtml" />
     <Content Include="Views\Movies\Details - Copy.cshtml" />
     <Content Include="Views\FilmesIMDB\Search.cshtml" />
+    <Content Include="Views\MyFilmsAPI\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
