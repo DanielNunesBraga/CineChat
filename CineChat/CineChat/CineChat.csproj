@@ -307,10 +307,10 @@
     <Content Include="Views\Movies\Details - Copy.cshtml" />
     <Content Include="Views\FilmesIMDB\Search.cshtml" />
     <Content Include="Views\MyFilmsAPI\Search.cshtml" />
+    <Content Include="Views\MyFilmsApiComingSoon\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\MyFilmsApiComingSoon\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

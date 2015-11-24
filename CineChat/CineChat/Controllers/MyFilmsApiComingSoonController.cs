@@ -51,16 +51,16 @@ namespace CineChat.Controllers
             if (response.IsSuccessStatusCode)
             {
 
-                MySearch inTheater = new MySearch();
-                inTheater = response.Content.ReadAsAsync<MySearch>().Result;
-                result = inTheater.data.inTheaters;
+                MySearch comingSoon = new MySearch();
+                comingSoon = response.Content.ReadAsAsync<MySearch>().Result;
+                result = comingSoon.data.inTheaters;
             }
             return result;
         }
         
         private class MySearch
         {
-            public inTheater inTheater { get; set; }
+            
             public About about { get; set; }
             public Data data { get; set; }
         }

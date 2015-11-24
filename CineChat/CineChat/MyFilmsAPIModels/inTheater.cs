@@ -12,6 +12,6 @@ namespace CineChat.MyFilmsAPIModels
         public string openingThisWeek { get; set; }
         public string inTheatersNow { get; set; }
         public string date { get; set; }
-        
+
     }
 }
