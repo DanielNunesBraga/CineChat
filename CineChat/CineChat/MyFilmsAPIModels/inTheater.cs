@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-
 namespace CineChat.MyFilmsAPIModels
 {
-    public class Data
+    public class inTheater
     {
         public List<Movie> movies { get; set; }
-        public List<inTheater> inTheaters { get; set; }
+
+        public string openingThisWeek { get; set; }
+        public string inTheatersNow { get; set; }
+        public string date { get; set; }
+        
     }
 }

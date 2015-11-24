@@ -187,6 +187,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
+    <Compile Include="Controllers\MyFilmsApiComingSoonController.cs" />
     <Compile Include="Controllers\MyFilmsAPIController.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -210,6 +211,7 @@
     <Compile Include="MyFilmsAPIModels\About.cs" />
     <Compile Include="MyFilmsAPIModels\Data.cs" />
     <Compile Include="MyFilmsAPIModels\Director.cs" />
+    <Compile Include="MyFilmsAPIModels\inTheater.cs" />
     <Compile Include="MyFilmsAPIModels\Movie.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Post.cs" />
@@ -308,6 +310,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\MyFilmsApiComingSoon\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
