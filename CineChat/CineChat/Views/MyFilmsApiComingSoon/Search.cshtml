@@ -42,6 +42,120 @@
             @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
         </td>
     </tr>
+    <tr>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayName("Title")
+                    </th>
+                    <th>
+                        @Html.DisplayName("originalTitle")
+                    </th>
+                    <th>
+                        @Html.DisplayName("year")
+                    </th>
+                    <th>
+                        @Html.DisplayName("releaseDate")
+                    </th>
+                    <th>
+                        @Html.DisplayName("urlPoster")
+                    </th>
+                    <th>
+                        @Html.DisplayName("plot")
+                    </th>
+                    <th>
+                        @Html.DisplayName("simplePlot")
+                    </th>
+                    <th>
+                        @Html.DisplayName("idIMDB")
+                    </th>
+                    <th>
+                        @Html.DisplayName("urlIMDB")
+                    </th>
+                    <th>
+                        @Html.DisplayName("rating")
+                    </th>
+                    <th>
+                        @Html.DisplayName("metascore")
+                    </th>
+                    <th>
+                        @Html.DisplayName("rated")
+                    </th>
+                    <th>
+                        @Html.DisplayName("votes")
+                    </th>
+                    <th>
+                        @Html.DisplayName("type")
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var mov in item.movies)
+                {
+
+                    <tr>
+                        
+                        <td>
+                            @Html.DisplayFor(modelItem => mov.title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mov.originalTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mov.year)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mov.releaseDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mov.urlPoster)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mov.plot)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mov.simplePlot)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mov.idIMDB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mov.urlIMDB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mov.rating)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mov.metascore)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mov.rated)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mov.votes)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => mov.type)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { /* id=mov.PrimaryKey */ }) |
+                            @Html.ActionLink("Details", "Details", new { /* id=mov.PrimaryKey */ }) |
+                            @Html.ActionLink("Delete", "Delete", new { /* id=mov.PrimaryKey */ })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+        </td>
+    </tr>
 }
 
 </table>
