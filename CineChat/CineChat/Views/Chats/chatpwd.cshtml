@@ -9,7 +9,7 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+    <div class="form-horizontal aligncenter">
         <h4>Post message in channel @ViewBag.chatTitle</h4>
         <hr />
         @Html.Hidden("id", (object)Convert.ToInt32(ViewBag.chatID))
