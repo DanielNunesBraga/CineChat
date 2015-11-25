@@ -26,11 +26,15 @@ namespace CineChat.Controllers
 
         public ActionResult Search(string id)
         {
-            IEnumerable<Movie> mymovie = apiSearch(id);
-            if (mymovie != null)
-                return View(mymovie.ToList());
-            else
-                return View("Index");
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                IEnumerable<Movie> mymovie = apiSearch(id);
+                if (mymovie != null)
+                    return View(mymovie.ToList());
+                else
+                    return View("Index");
+            }
+            return RedirectToAction("Index", "Home");
         }
 
 
