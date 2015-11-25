@@ -7,155 +7,127 @@
 
 <h2>ComingSoon</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.openingThisWeek)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.inTheatersNow)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.date)
-        </th>
+@foreach (var item in Model)
+{
 
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.openingThisWeek)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.inTheatersNow)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.date)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-    <tr>
-        <td>
+    <div class="well">
+        @foreach (var mov in item.movies)
+        {
+            <div class="panel panel-default ">
+                <div class="panel-body ">
+                    <div class="col-sm-4">
+                        <img src="@Html.DisplayFor(modelItem => mov.urlPoster)" />
+                    </div>
+                    <div class="col-sm-8">
+                        <table class=" ">
+                            <tbody>
+                               <!-- <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.openingThisWeek)
+                                        @Html.DisplayFor(modelItem => item.openingThisWeek)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.inTheatersNow)
+                                        @Html.DisplayFor(modelItem => item.inTheatersNow)
+                                    </td>
+                                </tr>-->
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.date)
+                                        @Html.DisplayFor(modelItem => item.date)
+                                    </td>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayName("Title ")
+                                        @Html.DisplayFor(modelItem => mov.title)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayName("Original Title")
+                                        @Html.DisplayFor(modelItem => mov.originalTitle)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayName("Year ")
+                                        @Html.DisplayFor(modelItem => mov.year)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayName("Release Date: ")
+                                        @Html.DisplayFor(modelItem => mov.releaseDate)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayName("Plot: ")
+                                        @Html.DisplayFor(modelItem => mov.plot)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayName("simple Plot: ")
+                                        @Html.DisplayFor(modelItem => mov.simplePlot)
+                                    </td>
+                                </tr>
+                                <!--<tr>
+                                    <td>
+                                        @Html.DisplayName("idIMDB :")
+                                        @Html.DisplayFor(modelItem => mov.idIMDB)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayName("urlIMDB: ")
+                                        @Html.DisplayFor(modelItem => mov.urlIMDB)
+                                    </td>
+                                </tr>-->
+                                <tr>
+                                    <td>
+                                        @Html.DisplayName("Rating ")
+                                        @Html.DisplayFor(modelItem => mov.rating)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayName("Metascore: ")
+                                        @Html.DisplayFor(modelItem => mov.metascore)
+                                    </td>
+                                </tr>
+                                <!--<tr>
+                                   <td>
+                                        @Html.DisplayName("Rated: ")
+                                        @Html.DisplayFor(modelItem => mov.rated)
+                                    </td>
+                                </tr>--> 
+                                <tr>
+                                    <td>
+                                        @Html.DisplayName("Votes: ")
+                                        @Html.DisplayFor(modelItem => mov.votes)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayName("Type :")
+                                        @Html.DisplayFor(modelItem => mov.type)
+                                    </td>
+                                </tr>
 
-        </td>
-        <td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>}
+    </div>
 
-        </td>
-        <td>
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayName("Title")
-                    </th>
-                    <th>
-                        @Html.DisplayName("originalTitle")
-                    </th>
-                    <th>
-                        @Html.DisplayName("year")
-                    </th>
-                    <th>
-                        @Html.DisplayName("releaseDate")
-                    </th>
-                    <th>
-                        @Html.DisplayName("urlPoster")
-                    </th>
-                    <th>
-                        @Html.DisplayName("plot")
-                    </th>
-                    <th>
-                        @Html.DisplayName("simplePlot")
-                    </th>
-                    <th>
-                        @Html.DisplayName("idIMDB")
-                    </th>
-                    <th>
-                        @Html.DisplayName("urlIMDB")
-                    </th>
-                    <th>
-                        @Html.DisplayName("rating")
-                    </th>
-                    <th>
-                        @Html.DisplayName("metascore")
-                    </th>
-                    <th>
-                        @Html.DisplayName("rated")
-                    </th>
-                    <th>
-                        @Html.DisplayName("votes")
-                    </th>
-                    <th>
-                        @Html.DisplayName("type")
-                    </th>
-                    <th></th>
-                </tr>
-
-                @foreach (var mov in item.movies)
-                {
-
-                    <tr>
-                        
-                        <td>
-                            @Html.DisplayFor(modelItem => mov.title)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mov.originalTitle)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mov.year)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mov.releaseDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mov.urlPoster)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mov.plot)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mov.simplePlot)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mov.idIMDB)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mov.urlIMDB)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mov.rating)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mov.metascore)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mov.rated)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mov.votes)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => mov.type)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { /* id=mov.PrimaryKey */ }) |
-                            @Html.ActionLink("Details", "Details", new { /* id=mov.PrimaryKey */ }) |
-                            @Html.ActionLink("Delete", "Delete", new { /* id=mov.PrimaryKey */ })
-                        </td>
-                    </tr>
-                }
-
-            </table>
-
-        </td>
-    </tr>
 }
 
-</table>
+
+
+
+
