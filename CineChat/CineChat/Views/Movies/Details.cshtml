@@ -53,6 +53,19 @@
                         </tr>
 
                         <tr>
+                            <td>
+                                Make a rate:
+                            </td>
+                            <td>
+                                @for (int i = 0; i < 11; i++){
+                                   @Html.ActionLink(i.ToString(), "rate", new { controller = "Movies", id = Model.ID, value = i }, null)
+                                    @:&nbsp;&nbsp;
+                                }
+                                
+                            </td>
+                        </tr>
+
+                        <tr>
                             <td>Categories:</td>
                             <td>
                                 @foreach (var item in Model.categories)
