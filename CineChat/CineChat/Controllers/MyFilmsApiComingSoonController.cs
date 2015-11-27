@@ -53,7 +53,7 @@ namespace CineChat.Controllers
 
             List<inTheater> result = new List<inTheater>();
 
-            HttpResponseMessage response = myClient.GetAsync("?token=" + token + "&format=json&language=en-us&date=2015-11").Result;
+            HttpResponseMessage response = myClient.GetAsync("?token=" + token + "&format=json&language=en-us&date="+DateTime.Now.Year).Result;
 
             
             if (response.IsSuccessStatusCode)

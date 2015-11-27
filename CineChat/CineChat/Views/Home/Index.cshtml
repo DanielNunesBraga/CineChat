@@ -17,13 +17,15 @@
             {
                 foreach (var mov in item.movies)
                 {
-                    @*@mov.title*@
+
+                    @*<h4>@mov.title</h4>*@
                     <img src="@Url.Content(mov.urlPoster)" />
+
                 }
             }
-
         </div>
     </div>
+
     <div class="panel panel-default">
         <div class="panel-body">
             <h1>Most Liked</h1>
@@ -33,7 +35,6 @@
                     {
                         <td>
                             <img class="img-thumbnail img-responsive" src="@Html.DisplayFor(modelItem => item.poster)" width="200">
-
                         </td>
 
                     }
