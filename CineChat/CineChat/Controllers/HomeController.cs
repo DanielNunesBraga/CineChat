@@ -22,7 +22,7 @@ namespace CineChat.Controllers
             {
                 movieID = x.ID,
                 like_count = x.likes.Count
-            }).OrderByDescending(x => x.like_count).Take(4);
+            }).OrderByDescending(x => x.like_count).Take(5);
             foreach (var movie in query)
             {
                 Movie addmv = new Movie();
@@ -63,7 +63,20 @@ namespace CineChat.Controllers
         }
         public ActionResult TopRated()
         {
-            return View();
+            ViewBag.counts = "";
+            List<Movie> movieliked = new List<Movie>();
+            var query = db.movie.ToList().Select(x => new
+            {
+                movieID = x.ID,
+                like_count = x.likes.Count
+            }).OrderByDescending(x => x.like_count).Take(40);
+            foreach (var movie in query)
+            {
+                Movie addmv = new Movie();
+                addmv = db.movie.FirstOrDefault(m => m.ID == movie.movieID);
+                movieliked.Add(addmv);
+            }
+            return View(movieliked);
         }
 
         public ActionResult Chat()

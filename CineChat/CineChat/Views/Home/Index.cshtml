@@ -1,58 +1,54 @@
 ﻿@model IEnumerable<CineChat.Models.Movie>
 
-    @{ViewBag.Title = "CineChat";
-    }
+@{ViewBag.Title = "CineChat";
+}
 
-    <div class="row">
-        <div>
-
-        </div>
-
-        <div class="panel panel-default">
-
-            <div class="panel-body">
-                <h1>Coming Soon</h1>
-                @foreach (var item in ViewBag.inTheaters)
-                {
-                    foreach (var mov in item.movies)
-                    {
-                        <img src="@Url.Content(mov.urlPoster)"  />
-                    @mov.title
-                        @*<img src="@Html.DisplayFor(modelItem => mov.urlPoster)" class="img-thumbnail" width="140" height="140" />*@
-                    }
-                }
-                @*<img src="/Content/Images/image1.jpg" class="img-thumbnail" width="140" height="140">
-                <img src="/Content/Images/image3.jpg" class="img-thumbnail" width="140" height="140">
-                <img src="/Content/Images/Joker.jpg" class="img-thumbnail" width="140" height="140">*@
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h1>Most Liked</h1>
-                <table>
-                    <tr>
-                        @foreach (var item in Model)
-                        {
-
-                            <td>
-                                <img src="@Html.DisplayFor(modelItem => item.poster)" width="200">
-
-                            </td>
-
-                        }
-                    </tr>
-
-                </table>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h1>Top Rated</h1>
-                <img src="/Content/Images/image1.jpg" class="img-thumbnail img-responsive" width="140" height="140">
-                <img src="/Content/Images/image2.jpg" class="img-thumbnail" width="140" height="140">
-                <img src="/Content/Images/Joker.jpg" class="img-thumbnail" width="140" height="140">
-            </div>
-        </div>
+<div class="row">
+    <div>
 
     </div>
+
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+            <h1>Coming Soon</h1>
+
+            @foreach (var item in ViewBag.inTheaters)
+            {
+                foreach (var mov in item.movies)
+                {
+                    @*@mov.title*@
+                    <img src="@Url.Content(mov.urlPoster)" />
+                }
+            }
+
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h1>Most Liked</h1>
+            <table>
+                <tr>
+                    @foreach (var item in Model)
+                    {
+                        <td>
+                            <img class="img-thumbnail img-responsive" src="@Html.DisplayFor(modelItem => item.poster)" width="200">
+
+                        </td>
+
+                    }
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h1>Top Rated</h1>
+            <img src="/Content/Images/image1.jpg" class="img-thumbnail img-responsive" width="140" height="140">
+            <img src="/Content/Images/image2.jpg" class="img-thumbnail" width="140" height="140">
+            <img src="/Content/Images/Joker.jpg" class="img-thumbnail" width="140" height="140">
+        </div>
+    </div>
+
+</div>
