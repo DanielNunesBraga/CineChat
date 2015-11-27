@@ -45,7 +45,16 @@ namespace CineChat.Models
         public virtual ICollection<Rates> rates { get; set; }
 
 
-
+        public double getrate()
+        {
+            double rate = 0;
+            foreach(var r in this.rates)
+            {
+                rate += r.rate;
+            }
+            rate = rate / this.rates.Count;
+            return rate;
+        }
 
     }
 }
