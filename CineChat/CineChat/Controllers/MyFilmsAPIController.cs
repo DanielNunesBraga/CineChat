@@ -40,7 +40,7 @@ namespace CineChat.Controllers
         {
             return View();
         }*/
-        private IEnumerable<Movie> apiSearch(string searchString)
+       public static IEnumerable<Movie> apiSearch(string searchString)
         {
             HttpClient myClient = new HttpClient();
             // New code:

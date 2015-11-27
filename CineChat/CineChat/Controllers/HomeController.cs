@@ -29,6 +29,8 @@ namespace CineChat.Controllers
                 addmv = db.movie.FirstOrDefault(m => m.ID == movie.movieID);
                 movieliked.Add(addmv);
             }
+            IEnumerable<CineChat.MyFilmsAPIModels.inTheater> inTheaters = CineChat.Controllers.MyFilmsApiComingSoonController.apiSearch();
+            ViewBag.inTheaters = inTheaters.ToList();          
             return View(movieliked);
         }
 

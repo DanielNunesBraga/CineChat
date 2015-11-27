@@ -28,14 +28,22 @@ namespace CineChat.Controllers
 
         public ActionResult Search()
         {
-            IEnumerable<inTheater> mymovie = apiSearch();
-            if (mymovie != null)
-                return View(mymovie.ToList());
-            else
+            IEnumerable<inTheater> inTheaters = apiSearch();
+            if (inTheaters == null)
                 return View("Index");
+            else
+            {
+                List<Movie> movies = new List<Movie>();
+                foreach(var inTheather in inTheaters){
+                    movies = movies.Concat(inTheather.movies).ToList();
+                }
+
+                //return View(movies.ToList());
+                return View(inTheaters.ToList());
+            }
         }
 
-        private IEnumerable<inTheater> apiSearch()
+        public static IEnumerable<inTheater> apiSearch()
         {
             HttpClient myClient = new HttpClient();
             myClient.BaseAddress = new Uri("http://api.myapifilms.com/imdb/comingSoon/");
