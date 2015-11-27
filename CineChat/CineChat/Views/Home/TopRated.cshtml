@@ -4,19 +4,18 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <h1>Top Rated Cine Chat</h1>
-            <table>
-                <tr>
-                    @foreach (var item in Model)
-                    {                       
-                            <td>
-                                <img src="@Html.DisplayFor(modelItem => item.poster)" width="200">
 
-                            </td>
-                        
-                    }
-                </tr>
 
-            </table>
+            @foreach (var item in Model)
+            {
+
+                <img src="@Html.DisplayFor(modelItem => item.poster)" width="200">
+
+
+            }
+
+
+
         </div>
     </div>
 </div>
