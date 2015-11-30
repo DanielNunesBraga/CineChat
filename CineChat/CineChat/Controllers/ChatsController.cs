@@ -297,7 +297,7 @@ namespace CineChat.Controllers
                 Post post = db.post.Find(id);
                 int chatid = post.chat.ID;
                 string currentUserId = User.Identity.GetUserId();
-                if (post.user.Id == currentUserId || post.chat.admin.Id == currentUserId)
+                if (post.user.Id == currentUserId || post.chat.admin.Id == currentUserId || User.IsInRole("AppAdmin"))
                 {
                     db.post.Remove(post);
                     db.SaveChanges();

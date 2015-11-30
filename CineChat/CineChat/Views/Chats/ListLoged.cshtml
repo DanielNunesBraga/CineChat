@@ -16,7 +16,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @item.chat.title
+            @Html.ActionLink(item.chat.title, "Details", new {id = item.chat.ID })
         </td>
         <td>
             @item.chat.category.description

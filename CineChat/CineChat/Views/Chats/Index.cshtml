@@ -46,7 +46,7 @@
             }
             @Html.ActionLink("Enter Channel", "Details", new { id=item.ID })
             @{
-                if (item.admin.Id == User.Identity.GetUserId())
+                if (item.admin.Id == User.Identity.GetUserId() || User.IsInRole("AppAdmin"))
                 {
                     @:&nbsp;|&nbsp;
                     @Html.ActionLink("Delete", "Delete", new { id = item.ID })

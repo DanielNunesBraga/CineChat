@@ -53,7 +53,7 @@
                         @Html.DisplayFor(model => post.message)
                     @:</span>
                     @:<span class="pull-right">
-                    if(post.user.Id == User.Identity.GetUserId() || Model.admin.Id == User.Identity.GetUserId())
+                    if(post.user.Id == User.Identity.GetUserId() || Model.admin.Id == User.Identity.GetUserId() || User.IsInRole("AppAdmin"))
                         {
                             @Html.ActionLink("x", "PostDelete", new {id = post.ID })
                         }
