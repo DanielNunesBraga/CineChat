@@ -66,6 +66,55 @@ namespace CineChat.Controllers
             return RedirectToAction("MyMovies");
         }
 
+        [Authorize]
+        public ActionResult Rate(int? id, double value)
+        {
+            if (id != null && value < 11 && value >= 0)
+            {
+                Movie movie = db.movie.Find(id);
+                string CurrentUserId = User.Identity.GetUserId();
+                var CurrentUser = db.Users.FirstOrDefault(u => u.Id == CurrentUserId);
+                Rates myrate = new Rates();
+                myrate.rate = value;
+                CurrentUser.rates.Add(myrate);
+                movie.rates.Add(myrate);
+                db.SaveChanges();
+                return View("Details", movie);
+            }
+            else
+                return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public ActionResult Ratechange(int? id, double value)
+        {
+            if (id != null && value < 11 && value >= 0)
+            {
+                Rates myrate = db.rate.Find(id);
+                Movie movie = db.movie.Find(myrate.movie.ID);
+                myrate.rate = value;
+                db.SaveChanges();
+                return View("Details", movie);
+            }
+            else
+                return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public ActionResult Rateremove(int? id)
+        {
+            if (id != null)
+            {
+                Rates myrate = db.rate.Find(id);
+                Movie movie = db.movie.Find(myrate.movie.ID);
+                db.rate.Remove(myrate);
+                db.SaveChanges();
+                return View("Details", movie);
+            }
+            else
+                return RedirectToAction("Index", "Home");
+        }
+
         // GET: Movies/Details/5
         [Authorize]
         public ActionResult Details(int? id)

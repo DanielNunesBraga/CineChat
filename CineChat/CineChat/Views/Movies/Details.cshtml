@@ -57,11 +57,42 @@
                                 Make a rate:
                             </td>
                             <td>
-                                @for (int i = 0; i < 11; i++){
-                                   @Html.ActionLink(i.ToString(), "rate", new { controller = "Movies", id = Model.ID, value = i }, null)
-                                    @:&nbsp;&nbsp;
+                                @{ 
+                                    string userid = User.Identity.GetUserId();
+                                    var movierate = db.rate.FirstOrDefault(mr => mr.user.Id == userid && mr.movie.ID == Model.ID);
+                                    double myrate = 11;
+                                    if (movierate != null)
+                                    { myrate = movierate.rate; }
+
                                 }
-                                
+
+                                @for (int i = 0; i < 11; i++){
+                                    if (myrate == 11)
+                                    {
+                                        @Html.ActionLink(i.ToString(), "rate", new { controller = "Movies", id = Model.ID, value = i }, null)
+                                    @:&nbsp;&nbsp;
+                                    }
+                                    else
+                                    {
+                                        if (myrate == i)
+                                        {
+                                            @:<b>
+                                            @i.ToString();
+                                        @:</b>&nbsp;&nbsp;
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink(i.ToString(), "ratechange", new { controller = "Movies", id = movierate.ID, value = i }, null)
+                                            @:&nbsp;&nbsp;
+                                        }
+                                        
+                                    }
+                                }
+                                @if (movierate != null)
+                                {
+                                    @Html.ActionLink("Remove rate", "rateremove", new { controller = "Movies", id = movierate.ID }, null)
+                                }
+
                             </td>
                         </tr>
 
